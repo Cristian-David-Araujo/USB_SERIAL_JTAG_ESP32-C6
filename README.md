@@ -3,11 +3,11 @@ The "ESP32-C6 USB Serial/JTAG Controller Library" provides a software interface 
 
 This controller allows for programming the SoC's flash memory, reading program output, and attaching a debugger to the running program, all using a computer with a USB port without the need for active external components.
 
-##Overview:
+## Overview:
 
 The ESP32-C6 project contains a USB Serial/JTAG controller that significantly simplifies programming and debugging of projects. By utilizing this integrated functionality, developers can circumvent the drawbacks associated with using UART and JTAG separately, such as pin IO occupation and the need for external components to interface with a host computer.
 
-###Key Features:
+### Key Features:
 
 USB Integration: The library enables seamless integration with the ESP32-C6's USB Serial/JTAG controller, simplifying programming and debugging.
 
