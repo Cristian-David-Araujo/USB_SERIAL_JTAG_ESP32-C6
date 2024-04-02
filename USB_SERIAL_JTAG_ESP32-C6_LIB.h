@@ -58,10 +58,16 @@
 typedef union {
     uint32_t WORD;
     struct {
-        uint32_t RDWR_BYTE: 8; // 0-7  Write or read byte data to or from UART TX/RX FIFO
+        uint32_t RDWR_BYTE: 8; // 0-7 (R/W)  Write or read byte data to or from UART TX/RX FIFO
         uint32_t RESERVED: 24; // 8-31
     } BITS;
 } __usbSerialJtag_ep1Reg_t;
+
+/**
+ * Masks definition for the __usbSerialJtag_ep1Reg_t register
+ */
+#define mUSBSERIALJTAG_EP1REG_RDWR_BYTE 0x000000FFUL // Set/Get (R/W) Write or read byte data to or from UART TX/RX FIFO
+#define mUSBSERIALJTAG_EP1REG_RESET 0x00000000UL // Reset value for the __usbSerialJtag_ep1Reg_t register
 
 
 /**
@@ -71,12 +77,20 @@ typedef union {
 typedef union {
     uint32_t WORD;
     struct {
-        uint32_t WR_DONE: 1; // 0  Configures whether to represent writing byte data to UART TX FIFO is done
-        uint32_t RESEERIAL_IN_EP_DATA_FREERVED: 1; // 1  Represents whether UART TX FIFO has space available
-        uint32_t SERIAL_OUT_EP_DATA_AVAIL: 1; // 2  Represents whether there is data in UART RX FIFO
+        uint32_t WR_DONE: 1; // 0 (WT)  Configures whether to represent writing byte data to UART TX FIFO is done
+        uint32_t SERIAL_IN_EP_DATA_FREE: 1; // 1 (RO)  Represents whether UART TX FIFO has space available
+        uint32_t SERIAL_OUT_EP_DATA_AVAIL: 1; // 2 (RO)  Represents whether there is data in UART RX FIFO
         uint32_t RESERVED: 29; // 3-31
     } BITS;
 } __usbSerialJtag_ep1ConfReg_t;
+
+/**
+ * Masks definition for the __usbSerialJtag_ep1ConfReg_t register
+ */
+#define mUSBSERIALJTAG_EP1CONFREG_WR_DONE 0x00000001UL // Set (WT) the WR_DONE field of the __usbSerialJtag_ep1ConfReg_t register
+#define mUSBSERIALJTAG_EP1CONFREG_SERIAL_IN_EP_DATA_FREE 0x00000002UL // Get (RO) Represents whether UART TX FIFO has space available
+#define mUSBSERIALJTAG_EP1CONFREG_SERIAL_OUT_EP_DATA_AVAIL 0x00000004UL // Get (RO) Represents whether there is data in UART RX FIFO
+#define mUSBSERIALJTAG_EP1CONFREG_RESET 0x00000002UL // Reset value for the __usbSerialJtag_ep1ConfReg_t register
 
 
 /**
@@ -86,23 +100,42 @@ typedef union {
 typedef union {
     uint32_t WORD;
     struct {
-        uint32_t PHY_SEL: 1; // 0  Configures whether to select internal or external PHY
-        uint32_t EXCHG_PINS_OVERRIDE: 1; // 1  Configures whether to enable software control USB D+ D- exchange
-        uint32_t EXCHG_PINS: 1; // 2  Configures whether to enable USB D+ D- exchange
-        uint32_t VREFH: 2; // 3-4 Configures single-end input high threshold
-        uint32_t VREFL: 2; // 5-6 Configures single-end input low threshold
-        uint32_t VREF_OVERRIDE: 1; // 7  Configures whether to enable software control input thresh-old
-        uint32_t PAD_PULL_OVERRIDE: 1; // 8  Configures whether to enable software to control USB D+ D- pullup and pulldown
-        uint32_t DP_PULLUP: 1; // 9  Configures whether to enable USB D+ pull up when PAD_PULL_OVERRIDE is 1
-        uint32_t DP_PULLDOWN: 1; // 10 Configures whether to enable USB D+ pull down when PAD_PULL_OVERRIDE is 1
-        uint32_t DM_PULLUP: 1; // 11 Configures whether to enable USB D- pull up when PAD_PULL_OVERRIDE is 1
-        uint32_t DM_PULLDOWN: 1; // 12 Configures whether to enable USB D- pull down when PAD_PULL_OVERRIDE is 1
-        uint32_t PULLUP_VALUE: 1; // 13 Configures the pull up value when PAD_PULL_OVERRIDE is 1
-        uint32_t USB_PAD_ENABLE: 1; // 14 Configures whether to enable USB pad function
-        uint32_t USB_JTAG_BRIDGE_EN: 1; // 15 Configures whether to disconnect usb_jtag and in-ternal JTAG
+        uint32_t PHY_SEL: 1; // 0 (R/W)  Configures whether to select internal or external PHY
+        uint32_t EXCHG_PINS_OVERRIDE: 1; // 1 (R/W)  Configures whether to enable software control USB D+ D- exchange
+        uint32_t EXCHG_PINS: 1; // 2 (R/W)  Configures whether to enable USB D+ D- exchange
+        uint32_t VREFH: 2; // 3-4 (R/W) Configures single-end input high threshold
+        uint32_t VREFL: 2; // 5-6 (R/W) Configures single-end input low threshold
+        uint32_t VREF_OVERRIDE: 1; // 7 (R/W)  Configures whether to enable software control input thresh-old
+        uint32_t PAD_PULL_OVERRIDE: 1; // 8 (R/W)  Configures whether to enable software to control USB D+ D- pullup and pulldown
+        uint32_t DP_PULLUP: 1; // 9 (R/W)  Configures whether to enable USB D+ pull up when PAD_PULL_OVERRIDE is 1
+        uint32_t DP_PULLDOWN: 1; // 10 (R/W) Configures whether to enable USB D+ pull down when PAD_PULL_OVERRIDE is 1
+        uint32_t DM_PULLUP: 1; // 11 (R/W) Configures whether to enable USB D- pull up when PAD_PULL_OVERRIDE is 1
+        uint32_t DM_PULLDOWN: 1; // 12 (R/W) Configures whether to enable USB D- pull down when PAD_PULL_OVERRIDE is 1
+        uint32_t PULLUP_VALUE: 1; // 13 (R/W) Configures the pull up value when PAD_PULL_OVERRIDE is 1
+        uint32_t USB_PAD_ENABLE: 1; // 14 (R/W) Configures whether to enable USB pad function
+        uint32_t USB_JTAG_BRIDGE_EN: 1; // 15 (R/W) Configures whether to disconnect usb_jtag and in-ternal JTAG
         uint32_t RESERVED: 16; // 16-31
     } BITS;
 } __usbSerialJtag_conf0Reg_t;
+
+/**
+ * Masks definition for the __usbSerialJtag_conf0Reg_t register
+ */
+#define mUSBSERIALJTAG_CONF0REG_PHY_SEL 0x00000001UL // Set/Get (R/W) Configures whether to select internal or external PHY
+#define mUSBSERIALJTAG_CONF0REG_EXCHG_PINS_OVERRIDE 0x00000002UL // Set/Get (R/W) Configures whether to enable software control USB D+ D- exchange
+#define mUSBSERIALJTAG_CONF0REG_EXCHG_PINS 0x00000004UL // Set/Get (R/W) Configures whether to enable USB D+ D- exchange
+#define mUSBSERIALJTAG_CONF0REG_VREFH 0x00000018UL // Set/Get (R/W) Configures single-end input high threshold
+#define mUSBSERIALJTAG_CONF0REG_VREFL 0x00000060UL // Set/Get (R/W) Configures single-end input low threshold
+#define mUSBSERIALJTAG_CONF0REG_VREF_OVERRIDE 0x00000080UL // Set/Get (R/W) Configures whether to enable software control input thresh-old
+#define mUSBSERIALJTAG_CONF0REG_PAD_PULL_OVERRIDE 0x00000100UL // Set/Get (R/W) Configures whether to enable software to control USB D+ D- pullup and pulldown
+#define mUSBSERIALJTAG_CONF0REG_DP_PULLUP 0x00000200UL // Set/Get (R/W) Configures whether to enable USB D+ pull up when PAD_PULL_OVERRIDE is 1
+#define mUSBSERIALJTAG_CONF0REG_DP_PULLDOWN 0x00000400UL // Set/Get (R/W) Configures whether to enable USB D+ pull down when PAD_PULL_OVERRIDE is 1
+#define mUSBSERIALJTAG_CONF0REG_DM_PULLUP 0x00000800UL // Set/Get (R/W) Configures whether to enable USB D- pull up when PAD_PULL_OVERRIDE is 1
+#define mUSBSERIALJTAG_CONF0REG_DM_PULLDOWN 0x00001000UL // Set/Get (R/W) Configures whether to enable USB D- pull down when PAD_PULL_OVERRIDE is 1
+#define mUSBSERIALJTAG_CONF0REG_PULLUP_VALUE 0x00002000UL // Set/Get (R/W) Configures the pull up value when PAD_PULL_OVERRIDE is 1
+#define mUSBSERIALJTAG_CONF0REG_USB_PAD_ENABLE 0x00004000UL // Set/Get (R/W) Configures whether to enable USB pad function
+#define mUSBSERIALJTAG_CONF0REG_USB_JTAG_BRIDGE_EN 0x00008000UL // Set/Get (R/W) Configures whether to disconnect usb_jtag and in-ternal JTAG
+#define mUSBSERIALJTAG_CONF0REG_RESET 0x00004200UL // Reset value for the __usbSerialJtag_conf0Reg_t register
 
 
 /**
@@ -112,16 +145,28 @@ typedef union {
 typedef union {
     uint32_t WORD;
     struct {
-        uint32_t TEST_ENABLE: 1; // 0  Configures whether to enable the test mode of the USB pad
-        uint32_t TEST_USB_OE: 1; // 1  Configures whether to enable USB pad output
-        uint32_t TEST_TX_DP: 1; // 2  Configures value of USB D+ in test mode when TEST_USB_OE is 1
-        uint32_t TEST_TX_DM: 1; // 3  Configures value of USB D- in test mode when TEST_USB_OE is 1
-        uint32_t TEST_RX_RCV: 1; // 4  Represents the current logical level of the voltage difference between USB D- and USB D+ pads in test mode
-        uint32_t TEST_RX_DP: 1; // 5  Represents the logical level of the USB D+ pad in test mode
-        uint32_t TEST_RX_DM: 1; // 6  Represents the logical level of the USB D- pad in test mode
+        uint32_t TEST_ENABLE: 1; // 0 (R/W)  Configures whether to enable the test mode of the USB pad
+        uint32_t TEST_USB_OE: 1; // 1 (R/W)  Configures whether to enable USB pad output
+        uint32_t TEST_TX_DP: 1; // 2 (R/W)  Configures value of USB D+ in test mode when TEST_USB_OE is 1
+        uint32_t TEST_TX_DM: 1; // 3 (R/W)  Configures value of USB D- in test mode when TEST_USB_OE is 1
+        uint32_t TEST_RX_RCV: 1; // 4 (RO)  Represents the current logical level of the voltage difference between USB D- and USB D+ pads in test mode
+        uint32_t TEST_RX_DP: 1; // 5 (RO)  Represents the logical level of the USB D+ pad in test mode
+        uint32_t TEST_RX_DM: 1; // 6 (RO)  Represents the logical level of the USB D- pad in test mode
         uint32_t RESERVED: 25; // 7-31
     } BITS;
 } __usbSerialJtag_testReg_t;
+
+/**
+ * Masks definition for the __usbSerialJtag_testReg_t register
+ */
+#define mUSBSERIALJTAG_TESTREG_TEST_ENABLE 0x00000001UL // Set/Get (R/W) Configures whether to enable the test mode of the USB pad
+#define mUSBSERIALJTAG_TESTREG_TEST_USB_OE 0x00000002UL // Set/Get (R/W) Configures whether to enable USB pad output
+#define mUSBSERIALJTAG_TESTREG_TEST_TX_DP 0x00000004UL // Set/Get (R/W) Configures value of USB D+ in test mode when TEST_USB_OE is 1
+#define mUSBSERIALJTAG_TESTREG_TEST_TX_DM 0x00000008UL // Set/Get (R/W) Configures value of USB D- in test mode when TEST_USB_OE is 1
+#define mUSBSERIALJTAG_TESTREG_TEST_RX_RCV 0x00000010UL // Get (RO) Represents the current logical level of the voltage difference between USB D- and USB D+ pads in test mode
+#define mUSBSERIALJTAG_TESTREG_TEST_RX_DP 0x00000020UL // Get (RO) Represents the logical level of the USB D+ pad in test mode
+#define mUSBSERIALJTAG_TESTREG_TEST_RX_DM 0x00000040UL // Get (RO) Represents the logical level of the USB D- pad in test mode
+#define mUSBSERIALJTAG_TESTREG_RESET 0x00000030UL // Reset value for the __usbSerialJtag_testReg_t register
 
 
 /**
@@ -131,10 +176,16 @@ typedef union {
 typedef union {
     uint32_t WORD;
     struct {
-        uint32_t CLK_EN: 1; // 0  Configures whether to force clock on for register
+        uint32_t CLK_EN: 1; // 0 (R/W)  Configures whether to force clock on for register
         uint32_t RESERVED: 31; // 1-31
     } BITS;
 } __usbSerialJtag_miscConfReg_t;
+
+/**
+ * Masks definition for the __usbSerialJtag_miscConfReg_t register
+ */
+#define mUSBSERIALJTAG_MISCCONFREG_CLK_EN 0x00000001UL // Set/Get (R/W) Configures whether to force clock on for register
+#define mUSBSERIALJTAG_MISCCONFREG_RESET 0x00000000UL // Reset value for the __usbSerialJtag_miscConfReg_t register
 
 
 /**
@@ -144,11 +195,18 @@ typedef union {
 typedef union {
     uint32_t WORD;
     struct {
-        uint32_t USB_MEM_PD: 1; // 0  Configures whether to power down USB memory
-        uint32_t USB_MEM_CLK_EN: 1; // 1  Configures whether to force clock on for USB memory
+        uint32_t USB_MEM_PD: 1; // 0 (R/W)  Configures whether to power down USB memory
+        uint32_t USB_MEM_CLK_EN: 1; // 1 (R/W)  Configures whether to force clock on for USB memory
         uint32_t RESERVED: 30; // 2-31
     } BITS;
 } __usbSerialJtag_memConfReg_t;
+
+/**
+ * Masks definition for the __usbSerialJtag_memConfReg_t register
+ */
+#define mUSBSERIALJTAG_MEMCONFREG_USB_MEM_PD 0x00000001UL // Set/Get (R/W) Configures whether to power down USB memory
+#define mUSBSERIALJTAG_MEMCONFREG_USB_MEM_CLK_EN 0x00000002UL // Set/Get (R/W) Configures whether to force clock on for USB memory
+#define mUSBSERIALJTAG_MEMCONFREG_RESET 0x00000002UL // Reset value for the __usbSerialJtag_memConfReg_t register
 
 
 /**
@@ -158,12 +216,20 @@ typedef union {
 typedef union {
     uint32_t WORD;
     struct {
-        uint32_t JTAG_RTS: 1; // 0  Represents the state of RTS signal as set by the most recent SET_LINE_CODING command
-        uint32_t JTAG_DTR: 1; // 1  Represents the state of DTR signal as set by the most recent SET_LINE_CODING command
-        uint32_t USB_UART_CHIP_RST_DIS: 1; // 2  Configures whether to disable chip reset from USB serial channel
+        uint32_t JTAG_RTS: 1; // 0 (RO)  Represents the state of RTS signal as set by the most recent SET_LINE_CODING command
+        uint32_t JTAG_DTR: 1; // 1 (RO)  Represents the state of DTR signal as set by the most recent SET_LINE_CODING command
+        uint32_t USB_UART_CHIP_RST_DIS: 1; // 2 (R/W)  Configures whether to disable chip reset from USB serial channel
         uint32_t RESERVED: 29; // 3-31
     } BITS;
 } __usbSerialJtag_chipRstReg_t;
+
+/**
+ * Masks definition for the __usbSerialJtag_chipRstReg_t register
+ */
+#define mUSBSERIALJTAG_CHIPRSTREG_JTAG_RTS 0x00000001UL // Get (RO) Represents the state of RTS signal as set by the most recent SET_LINE_CODING command
+#define mUSBSERIALJTAG_CHIPRSTREG_JTAG_DTR 0x00000002UL // Get (RO) Represents the state of DTR signal as set by the most recent SET_LINE_CODING command
+#define mUSBSERIALJTAG_CHIPRSTREG_USB_UART_CHIP_RST_DIS 0x00000004UL // Set/Get (R/W) Configures whether to disable chip reset from USB serial channel
+#define mUSBSERIALJTAG_CHIPRSTREG_RESET 0x00000000UL // Reset value for the __usbSerialJtag_chipRstReg_t register
 
 
 /**
@@ -173,9 +239,16 @@ typedef union {
 typedef union {
     uint32_t WORD;
     struct {
-        uint32_t GET_LINE_CODE_W0_REG: 32; // 0-31 Configures the value of dwDTERate set by software, which is requested by GET_LINE_CODING command
+        uint32_t GET_LINE_CODE_W0_REG: 32; // 0-31 (R/W) Configures the value of dwDTERate set by software, which is requested by GET_LINE_CODING command
     } BITS;
 } __usbSerialJtag_getLineCodeW0Reg_t;
+
+/**
+ * Masks definition for the __usbSerialJtag_getLineCodeW0Reg_t register
+ */
+#define mUSBSERIALJTAG_GETLINECODEW0REG_GET_LINE_CODE_W0_REG 0xFFFFFFFFUL // Set/Get (R/W) Configures the value of dwDTERate set by software, which is requested by GET_LINE_CODING command
+#define mUSBSERIALJTAG_GETLINECODEW0REG_RESET 0x00000000UL // Reset value for the __usbSerialJtag_getLineCodeW0Reg_t register
+
 
 /**
  * \typedef __usbSerialJtag_getLineCodeW1Reg_t
@@ -184,12 +257,20 @@ typedef union {
 typedef union {
     uint32_t WORD;
     struct {
-        uint32_t GET_BDATA_BITS: 8; // 0-7 Configures the value of bDataBits set by software, which is requested by GET_LINE_CODING command
-        uint32_t GET_BPARITY_TYPE: 8; // 8-15 Configures the value of bParityType set by software, which is requested by GET_LINE_CODING command
-        uint32_t GET_BCHAR_FORMAT: 8; // 16-23 Configures the value of bCharFormat set by software, which is requested by GET_LINE_CODING command
+        uint32_t GET_BDATA_BITS: 8; // 0-7 (R/W) Configures the value of bDataBits set by software, which is requested by GET_LINE_CODING command
+        uint32_t GET_BPARITY_TYPE: 8; // 8-15 (R/W) Configures the value of bParityType set by software, which is requested by GET_LINE_CODING command
+        uint32_t GET_BCHAR_FORMAT: 8; // 16-23 (R/W) Configures the value of bCharFormat set by software, which is requested by GET_LINE_CODING command
         uint32_t RESERVED: 8; // 24-31
     } BITS;
 } __usbSerialJtag_getLineCodeW1Reg_t;
+
+/**
+ * Masks definition for the __usbSerialJtag_getLineCodeW1Reg_t register
+ */
+#define mUSBSERIALJTAG_GETLINECODEW1REG_GET_BDATA_BITS 0x000000FFUL // Set/Get (R/W) Configures the value of bDataBits set by software, which is requested by GET_LINE_CODING command
+#define mUSBSERIALJTAG_GETLINECODEW1REG_GET_BPARITY_TYPE 0x0000FF00UL // Set/Get (R/W) Configures the value of bParityType set by software, which is requested by GET_LINE_CODING command
+#define mUSBSERIALJTAG_GETLINECODEW1REG_GET_BCHAR_FORMAT 0x00FF0000UL // Set/Get (R/W) Configures the value of bCharFormat set by software, which is requested by GET_LINE_CODING command
+#define mUSBSERIALJTAG_GETLINECODEW1REG_RESET 0x00000000UL // Reset value for the __usbSerialJtag_getLineCodeW1Reg_t register
 
 
 /**
@@ -199,10 +280,16 @@ typedef union {
 typedef union {
     uint32_t WORD;
     struct {
-        uint32_t CONFIG_UPDATE: 1; // 0  Configures whether to update the value of configuration registers from APB clock domain to 48 MHz clock domain.
+        uint32_t CONFIG_UPDATE: 1; // 0 (WT)  Configures whether to update the value of configuration registers from APB clock domain to 48 MHz clock domain.
         uint32_t RESERVED: 31; // 1-31
     } BITS;
 } __usbSerialJtag_configUpdateReg_t;
+
+/**
+ * Masks definition for the __usbSerialJtag_configUpdateReg_t register
+ */
+#define mUSBSERIALJTAG_CONFIGUPDATEREG_CONFIG_UPDATE 0x00000001UL // Set (WT) Configures whether to update the value of configuration registers from APB clock domain to 48 MHz clock domain.
+#define mUSBSERIALJTAG_CONFIGUPDATEREG_RESET 0x00000000UL // Reset value for the __usbSerialJtag_configUpdateReg_t register
 
 
 /**
@@ -212,15 +299,26 @@ typedef union {
 typedef union {
     uint32_t WORD;
     struct {
-        uint32_t SERIAL_IN_AFIFO_RESET_WR: 1; // 0  Configures whether to reset CDC_ACM IN async FIFO write clock domain
-        uint32_t SERIAL_IN_AFIFO_RESET_RD: 1; // 1  Configures whether to reset CDC_ACM IN async FIFO read clock domain
-        uint32_t SERIAL_OUT_AFIFO_RESET_WR: 1; // 2  Configures whether to reset CDC_ACM OUT async FIFO write clock domain
-        uint32_t SERIAL_OUT_AFIFO_RESET_RD: 1; // 3  Configures whether to reset CDC_ACM OUT async FIFO read clock domain
-        uint32_t SERIAL_OUT_AFIFO_REMPTY: 1; // 4  Represents CDC_ACM OUT async FIFO empty signal in read clock domain
-        uint32_t SERIAL_IN_AFIFO_WFULL: 1; // 5  Represents CDC_ACM IN async FIFO full signal in write clock domain
+        uint32_t SERIAL_IN_AFIFO_RESET_WR: 1; // 0 (R/W)  Configures whether to reset CDC_ACM IN async FIFO write clock domain
+        uint32_t SERIAL_IN_AFIFO_RESET_RD: 1; // 1 (R/W)  Configures whether to reset CDC_ACM IN async FIFO read clock domain
+        uint32_t SERIAL_OUT_AFIFO_RESET_WR: 1; // 2 (R/W)  Configures whether to reset CDC_ACM OUT async FIFO write clock domain
+        uint32_t SERIAL_OUT_AFIFO_RESET_RD: 1; // 3 (R/W)  Configures whether to reset CDC_ACM OUT async FIFO read clock domain
+        uint32_t SERIAL_OUT_AFIFO_REMPTY: 1; // 4 (RO)  Represents CDC_ACM OUT async FIFO empty signal in read clock domain
+        uint32_t SERIAL_IN_AFIFO_WFULL: 1; // 5 (RO)  Represents CDC_ACM IN async FIFO full signal in write clock domain
         uint32_t RESERVED: 26; // 6-31
     } BITS;
 } __usbSerialJtag_serAfifoConficReg_t;
+
+/**
+ * Masks definition for the __usbSerialJtag_serAfifoConficReg_t register
+ */
+#define mUSBSERIALJTAG_SERAFIFOCONFICREG_SERIAL_IN_AFIFO_RESET_WR 0x00000001UL // Set/Get (R/W) Configures whether to reset CDC_ACM IN async FIFO write clock domain
+#define mUSBSERIALJTAG_SERAFIFOCONFICREG_SERIAL_IN_AFIFO_RESET_RD 0x00000002UL // Set/Get (R/W) Configures whether to reset CDC_ACM IN async FIFO read clock domain
+#define mUSBSERIALJTAG_SERAFIFOCONFICREG_SERIAL_OUT_AFIFO_RESET_WR 0x00000004UL // Set/Get (R/W) Configures whether to reset CDC_ACM OUT async FIFO write clock domain
+#define mUSBSERIALJTAG_SERAFIFOCONFICREG_SERIAL_OUT_AFIFO_RESET_RD 0x00000008UL // Set/Get (R/W) Configures whether to reset CDC_ACM OUT async FIFO read clock domain
+#define mUSBSERIALJTAG_SERAFIFOCONFICREG_SERIAL_OUT_AFIFO_REMPTY 0x00000010UL // Get (RO) Represents CDC_ACM OUT async FIFO empty signal in read clock domain
+#define mUSBSERIALJTAG_SERAFIFOCONFICREG_SERIAL_IN_AFIFO_WFULL 0x00000020UL // Get (RO) Represents CDC_ACM IN async FIFO full signal in write clock domain
+#define mUSBSERIALJTAG_SERAFIFOCONFICREG_RESET 0x00000010UL // Reset value for the __usbSerialJtag_serAfifoConficReg_t register
 
 
 
@@ -229,31 +327,66 @@ typedef union {
 *********************************************************************************************************************************/
 
 /**
+ * \addtogroup USB_SERIAL_JTAG_INT_X_REG 
+ * Typedef, constants and macros associated to the USB_SERIAL_JTAG_INT_X_REG register
+ * @{
+ * 
+ * \brief Interrupt X status register
+ * X is RAW, ST, ENA, CLR
+*/
+
+/**
  * \typedef __usbSerialJtag_intStatusReg_t
  * Interrupt status register (RAW, ST, ENA, CLR)
  */
 typedef union {
     uint32_t WORD;
     struct {
-        uint32_t IN_FLUSH_INT: 1; // 0  Interrupt status of JTAG_IN_FLUSH_INT
-        uint32_t SOF_INT: 1; // 1  Interrupt status of SOF_INT
-        uint32_t OUT_RECV_PKT_INT: 1; // 2  Interrupt status of OUT_RECV_PKT_INT
-        uint32_t IN_EMPTY_INT: 1; // 3  Interrupt status of IN_EMPTY_INT
-        uint32_t PID_ERR_INT: 1; // 4  Interrupt status of PID_ERR_INT
-        uint32_t CRC5_ERR_INT: 1; // 5  Interrupt status of CRC5_ERR_INT
-        uint32_t CRC16_ERR_INT: 1; // 6  Interrupt status of CRC16_ERR_INT
-        uint32_t STUFF_ERR_INT: 1; // 7  Interrupt status of STUFF_ERR_INT
-        uint32_t IN_TOKEN_REC_IN_EP1_INT: 1; // 8  Interrupt status of IN_TOKEN_REC_IN_EP1_INT
-        uint32_t USB_BUS_RESET_INT: 1; // 9  Interrupt status of USB_BUS_RESET_INT
-        uint32_t OUT_EP1_ZERO_PAYLOAD_INT: 1; // 10 Interrupt status of OUT_EP1_ZERO_PAYLOAD_INT
-        uint32_t OUT_EP2_ZERO_PAYLOAD_INT: 1; // 11 Interrupt status of OUT_EP2_ZERO_PAYLOAD_INT
-        uint32_t RTS_CHG_INT: 1; // 12 Interrupt status of RTS_CHG_INT
-        uint32_t DTR_CHG_INT: 1; // 13 Interrupt status of DTR_CHG_INT
-        uint32_t GET_LINE_CODE_INT: 1; // 14 Interrupt status of GET_LINE_CODE_INT
-        uint32_t SET_LINE_CODE_INT: 1; // 15 Interrupt status of SET_LINE_CODE_INT
+        uint32_t IN_FLUSH_INT: 1; // 0 (R/WTC/SS)  Interrupt status of JTAG_IN_FLUSH_INT
+        uint32_t SOF_INT: 1; // 1 (R/WTC/SS)  Interrupt status of SOF_INT
+        uint32_t OUT_RECV_PKT_INT: 1; // 2 (R/WTC/SS)  Interrupt status of OUT_RECV_PKT_INT
+        uint32_t IN_EMPTY_INT: 1; // 3 (R/WTC/SS)  Interrupt status of IN_EMPTY_INT
+        uint32_t PID_ERR_INT: 1; // 4 (R/WTC/SS)  Interrupt status of PID_ERR_INT
+        uint32_t CRC5_ERR_INT: 1; // 5 (R/WTC/SS)  Interrupt status of CRC5_ERR_INT
+        uint32_t CRC16_ERR_INT: 1; // 6 (R/WTC/SS)  Interrupt status of CRC16_ERR_INT
+        uint32_t STUFF_ERR_INT: 1; // 7 (R/WTC/SS)  Interrupt status of STUFF_ERR_INT
+        uint32_t IN_TOKEN_REC_IN_EP1_INT: 1; // 8 (R/WTC/SS)  Interrupt status of IN_TOKEN_REC_IN_EP1_INT
+        uint32_t USB_BUS_RESET_INT: 1; // 9 (R/WTC/SS)  Interrupt status of USB_BUS_RESET_INT
+        uint32_t OUT_EP1_ZERO_PAYLOAD_INT: 1; // 10 (R/WTC/SS) Interrupt status of OUT_EP1_ZERO_PAYLOAD_INT
+        uint32_t OUT_EP2_ZERO_PAYLOAD_INT: 1; // 11 (R/WTC/SS) Interrupt status of OUT_EP2_ZERO_PAYLOAD_INT
+        uint32_t RTS_CHG_INT: 1; // 12 (R/WTC/SS) Interrupt status of RTS_CHG_INT
+        uint32_t DTR_CHG_INT: 1; // 13 (R/WTC/SS) Interrupt status of DTR_CHG_INT
+        uint32_t GET_LINE_CODE_INT: 1; // 14 (R/WTC/SS) Interrupt status of GET_LINE_CODE_INT
+        uint32_t SET_LINE_CODE_INT: 1; // 15 (R/WTC/SS) Interrupt status of SET_LINE_CODE_INT
         uint32_t RESERVED: 16; // 16-31
     } BITS;
 } __usbSerialJtag_intStatusReg_t;
+
+/**
+ * Masks definition for the __usbSerialJtag_intStatusReg_t register
+ */
+#define mUSBSERIALJTAG_INTSTATUSREG_IN_FLUSH_INT 0x00000001UL // Set/Get (R/WTC/SS) Interrupt status of JTAG_IN_FLUSH_INT
+#define mUSBSERIALJTAG_INTSTATUSREG_SOF_INT 0x00000002UL // Set/Get (R/WTC/SS) Interrupt status of SOF_INT
+#define mUSBSERIALJTAG_INTSTATUSREG_OUT_RECV_PKT_INT 0x00000004UL // Set/Get (R/WTC/SS) Interrupt status of OUT_RECV_PKT_INT
+#define mUSBSERIALJTAG_INTSTATUSREG_IN_EMPTY_INT 0x00000008UL // Set/Get (R/WTC/SS) Interrupt status of IN_EMPTY_INT
+#define mUSBSERIALJTAG_INTSTATUSREG_PID_ERR_INT 0x00000010UL // Set/Get (R/WTC/SS) Interrupt status of PID_ERR_INT
+#define mUSBSERIALJTAG_INTSTATUSREG_CRC5_ERR_INT 0x00000020UL // Set/Get (R/WTC/SS) Interrupt status of CRC5_ERR_INT
+#define mUSBSERIALJTAG_INTSTATUSREG_CRC16_ERR_INT 0x00000040UL // Set/Get (R/WTC/SS) Interrupt status of CRC16_ERR_INT
+#define mUSBSERIALJTAG_INTSTATUSREG_STUFF_ERR_INT 0x00000080UL // Set/Get (R/WTC/SS) Interrupt status of STUFF_ERR_INT
+#define mUSBSERIALJTAG_INTSTATUSREG_IN_TOKEN_REC_IN_EP1_INT 0x00000100UL // Set/Get (R/WTC/SS) Interrupt status of IN_TOKEN_REC_IN_EP1_INT
+#define mUSBSERIALJTAG_INTSTATUSREG_USB_BUS_RESET_INT 0x00000200UL // Set/Get (R/WTC/SS) Interrupt status of USB_BUS_RESET_INT
+#define mUSBSERIALJTAG_INTSTATUSREG_OUT_EP1_ZERO_PAYLOAD_INT 0x00000400UL // Set/Get (R/WTC/SS) Interrupt status of OUT_EP1_ZERO_PAYLOAD_INT
+#define mUSBSERIALJTAG_INTSTATUSREG_OUT_EP2_ZERO_PAYLOAD_INT 0x00000800UL // Set/Get (R/WTC/SS) Interrupt status of OUT_EP2_ZERO_PAYLOAD_INT
+#define mUSBSERIALJTAG_INTSTATUSREG_RTS_CHG_INT 0x00001000UL // Set/Get (R/WTC/SS) Interrupt status of RTS_CHG_INT
+#define mUSBSERIALJTAG_INTSTATUSREG_DTR_CHG_INT 0x00002000UL // Set/Get (R/WTC/SS) Interrupt status of DTR_CHG_INT
+#define mUSBSERIALJTAG_INTSTATUSREG_GET_LINE_CODE_INT 0x00004000UL // Set/Get (R/WTC/SS) Interrupt status of GET_LINE_CODE_INT
+#define mUSBSERIALJTAG_INTSTATUSREG_SET_LINE_CODE_INT 0x00008000UL // Set/Get (R/WTC/SS) Interrupt status of SET_LINE_CODE_INT
+#define mUSBSERIALJTAG_INTSTATUSREG_RESET_RAW 0x00000008UL // Reset RAW value for the __usbSerialJtag_intStatusReg_t register
+#define mUSBSERIALJTAG_INTSTATUSREG_RESET_ST 0x00000000UL // Reset ST value for the __usbSerialJtag_intStatusReg_t register
+#define mUSBSERIALJTAG_INTSTATUSREG_RESET_ENA 0x00000000UL // Reset ENA value for the __usbSerialJtag_intStatusReg_t register
+#define mUSBSERIALJTAG_INTSTATUSREG_RESET_CLR 0x00000000UL // Reset CLR value for the __usbSerialJtag_intStatusReg_t register
+/** @} */
+
 
 
 /********************************************************************************************************************************
@@ -267,18 +400,30 @@ typedef union {
 typedef union {
     uint32_t WORD;
     struct {
-        uint32_t IN_FIFO_CNT: 2; // 0-1  Represents JTAG IN FIFO counter
-        uint32_t IN_FIFO_EMPTY: 1; // 2  Represents whether JTAG IN FIFO is empty
-        uint32_t IN_FIFO_FULL: 1; // 3  Represents whether JTAG IN FIFO is full
-        uint32_t OUT_FIFO_CNT: 2; // 4-5  Represents JTAG OUT FIFO counter
-        uint32_t OUT_FIFO_EMPTY: 1; // 6  Represents whether JTAG OUT FIFO is empty
-        uint32_t OUT_FIFO_FULL: 1; // 7  Represents whether JTAG OUT FIFO is full
-        uint32_t IN_FIFO_RESET: 1; // 8  Configures whether to reset JTAG IN FIFO
-        uint32_t OUT_FIFO_RESET: 1; // 9  Configures whether to reset JTAG OUT FIFO
+        uint32_t IN_FIFO_CNT: 2; // 0-1 (RO)  Represents JTAG IN FIFO counter
+        uint32_t IN_FIFO_EMPTY: 1; // 2 (RO)  Represents whether JTAG IN FIFO is empty
+        uint32_t IN_FIFO_FULL: 1; // 3 (RO)  Represents whether JTAG IN FIFO is full
+        uint32_t OUT_FIFO_CNT: 2; // 4-5 (RO)  Represents JTAG OUT FIFO counter
+        uint32_t OUT_FIFO_EMPTY: 1; // 6 (RO)  Represents whether JTAG OUT FIFO is empty
+        uint32_t OUT_FIFO_FULL: 1; // 7 (RO)  Represents whether JTAG OUT FIFO is full
+        uint32_t IN_FIFO_RESET: 1; // 8 (R/W)  Configures whether to reset JTAG IN FIFO
+        uint32_t OUT_FIFO_RESET: 1; // 9 (R/W)  Configures whether to reset JTAG OUT FIFO
         uint32_t RESERVED: 22; // 10-31
-
     } BITS;
 } __usbSerialJtag_jfifoStReg_t;
+
+/**
+ * Masks definition for the __usbSerialJtag_jfifoStReg_t register
+ */
+#define mUSBSERIALJTAG_JFIFOSTREG_IN_FIFO_CNT 0x00000003UL // Get (RO) Represents JTAG IN FIFO counter
+#define mUSBSERIALJTAG_JFIFOSTREG_IN_FIFO_EMPTY 0x00000004UL // Get (RO) Represents whether JTAG IN FIFO is empty
+#define mUSBSERIALJTAG_JFIFOSTREG_IN_FIFO_FULL 0x00000008UL // Get (RO) Represents whether JTAG IN FIFO is full
+#define mUSBSERIALJTAG_JFIFOSTREG_OUT_FIFO_CNT 0x00000030UL // Get (RO) Represents JTAG OUT FIFO counter
+#define mUSBSERIALJTAG_JFIFOSTREG_OUT_FIFO_EMPTY 0x00000040UL // Get (RO) Represents whether JTAG OUT FIFO is empty
+#define mUSBSERIALJTAG_JFIFOSTREG_OUT_FIFO_FULL 0x00000080UL // Get (RO) Represents whether JTAG OUT FIFO is full
+#define mUSBSERIALJTAG_JFIFOSTREG_IN_FIFO_RESET 0x00000100UL // Set/Get (R/W) Configures whether to reset JTAG IN FIFO
+#define mUSBSERIALJTAG_JFIFOSTREG_OUT_FIFO_RESET 0x00000200UL // Set/Get (R/W) Configures whether to reset JTAG OUT FIFO
+#define mUSBSERIALJTAG_JFIFOSTREG_RESET 0x00000044UL // Reset value for the __usbSerialJtag_jfifoStReg_t register
 
 
 /**
@@ -288,10 +433,16 @@ typedef union {
 typedef union {
     uint32_t WORD;
     struct {
-        uint32_t SOF_FRAME_INDEX: 11; // 0-10  Represents frame index of received SOF frame
+        uint32_t SOF_FRAME_INDEX: 11; // 0-10 (RO)  Represents frame index of received SOF frame
         uint32_t RESERVED: 21; // 11-31
     } BITS;
 } __usbSerialJtag_framNumReg_t;
+
+/**
+ * Masks definition for the __usbSerialJtag_framNumReg_t register
+ */
+#define mUSBSERIALJTAG_FRAMNUMREG_SOF_FRAME_INDEX 0x000007FFUL // Get (RO) Represents frame index of received SOF frame
+#define mUSBSERIALJTAG_FRAMNUMREG_RESET 0x00000000UL // Reset value for the __usbSerialJtag_framNumReg_t register
 
 
 /**
@@ -301,12 +452,20 @@ typedef union {
 typedef union {
     uint32_t WORD;
     struct {
-        uint32_t IN_EPX_STATE: 2; // 0-1  Represents the state of IN endpoint X
-        uint32_t IN_EPX_WR_ADDR: 7; // 2-8  Represents write data address of IN endpoint X
-        uint32_t IN_EPX_RD_ADDR: 7; // 9-15 Represents read data address of IN endpoint X
+        uint32_t IN_EPX_STATE: 2; // 0-1 (RO)  Represents the state of IN endpoint X
+        uint32_t IN_EPX_WR_ADDR: 7; // 2-8 (RO)  Represents write data address of IN endpoint X
+        uint32_t IN_EPX_RD_ADDR: 7; // 9-15 (RO) Represents read data address of IN endpoint X
         uint32_t RESERVED: 16; // 16-31
     } BITS;
 } __usbSerialJtag_inEpxStReg_t;
+
+/**
+ * Masks definition for the __usbSerialJtag_inEpxStReg_t register
+ */
+#define mUSBSERIALJTAG_INEPXSTREG_IN_EPX_STATE 0x00000003UL // Get (RO) Represents the state of IN endpoint X
+#define mUSBSERIALJTAG_INEPXSTREG_IN_EPX_WR_ADDR 0x000001FCUL // Get (RO) Represents write data address of IN endpoint X
+#define mUSBSERIALJTAG_INEPXSTREG_IN_EPX_RD_ADDR 0x0000FE00UL // Get (RO) Represents read data address of IN endpoint X
+#define mUSBSERIALJTAG_INEPXSTREG_RESET 0x00000003UL // Reset value for the __usbSerialJtag_inEpxStReg_t register
 
 
 /**
@@ -324,6 +483,15 @@ typedef union {
     } BITS;
 } __usbSerialJtag_outEpxStReg_t;
 
+/**
+ * Masks definition for the __usbSerialJtag_outEpxStReg_t register
+ */
+#define mUSBSERIALJTAG_OUTEPXSTREG_OUT_EPX_STATE 0x00000003UL // Get (RO) Represents the state of OUT endpoint X
+#define mUSBSERIALJTAG_OUTEPXSTREG_OUT_EPX_WR_ADDR 0x000001FCUL // Get (RO) Represents write data address of OUT endpoint X
+#define mUSBSERIALJTAG_OUTEPXSTREG_OUT_EPX_RD_ADDR 0x0000FE00UL // Get (RO) Represents read data address of OUT endpoint X
+#define mUSBSERIALJTAG_OUTEPXSTREG_EP1_REC_DATA_CNT 0x007F0000UL // Get (RO) Represents data count in OUT endpoint 1 when one packet is received
+#define mUSBSERIALJTAG_OUTEPXSTREG_RESET 0x00000003UL // Reset value for the __usbSerialJtag_outEpxStReg_t register
+
 
 /**
  * \typedef __usbSerialJtag_setLineCodeW0Reg_t
@@ -332,9 +500,15 @@ typedef union {
 typedef union {
     uint32_t WORD;
     struct {
-        uint32_t DW_DTE_RATE: 32; // 0-31 Represents the value of dwDTERate set by host through SET_LINE_CODING command
+        uint32_t DW_DTE_RATE: 32; // 0-31 (RO) Represents the value of dwDTERate set by host through SET_LINE_CODING command
     } BITS;
 } __usbSerialJtag_setLineCodeW0Reg_t;
+
+/**
+ * Masks definition for the __usbSerialJtag_setLineCodeW0Reg_t register
+ */
+#define mUSBSERIALJTAG_SETLINECODEW0REG_DW_DTE_RATE 0xFFFFFFFFUL // Get (RO) Represents the value of dwDTERate set by host through SET_LINE_CODING command
+#define mUSBSERIALJTAG_SETLINECODEW0REG_RESET 0x00000000UL // Reset value for the __usbSerialJtag_setLineCodeW0Reg_t register
 
 
 /**
@@ -344,12 +518,20 @@ typedef union {
 typedef union {
     uint32_t WORD;
     struct {
-        uint32_t BCHAR_FORMAT: 8; // 0-7  Represents the value of bCharFormat set by host through SET_LINE_CODING command
-        uint32_t BPARITY_TYPE: 8; // 8-15 Represents the value of bParityType set by host through SET_LINE_CODING command
-        uint32_t BDATA_BITS: 8; // 16-23 Represents the value of bDataBits set by host through SET_LINE_CODING command
+        uint32_t BCHAR_FORMAT: 8; // 0-7 (RO)  Represents the value of bCharFormat set by host through SET_LINE_CODING command
+        uint32_t BPARITY_TYPE: 8; // 8-15 (RO) Represents the value of bParityType set by host through SET_LINE_CODING command
+        uint32_t BDATA_BITS: 8; // 16-23 (RO) Represents the value of bDataBits set by host through SET_LINE_CODING command
         uint32_t RESERVED: 8; // 24-31
     } BITS;
 } __usbSerialJtag_setLineCodeW1Reg_t;
+
+/**
+ * Masks definition for the __usbSerialJtag_setLineCodeW1Reg_t register
+ */
+#define mUSBSERIALJTAG_SETLINECODEW1REG_BCHAR_FORMAT 0x000000FFUL // Get (RO) Represents the value of bCharFormat set by host through SET_LINE_CODING command
+#define mUSBSERIALJTAG_SETLINECODEW1REG_BPARITY_TYPE 0x0000FF00UL // Get (RO) Represents the value of bParityType set by host through SET_LINE_CODING command
+#define mUSBSERIALJTAG_SETLINECODEW1REG_BDATA_BITS 0x00FF0000UL // Get (RO) Represents the value of bDataBits set by host through SET_LINE_CODING command
+#define mUSBSERIALJTAG_SETLINECODEW1REG_RESET 0x00000000UL // Reset value for the __usbSerialJtag_setLineCodeW1Reg_t register
 
 
 /**
@@ -359,10 +541,16 @@ typedef union {
 typedef union {
     uint32_t WORD;
     struct {
-        uint32_t BUS_RESET_ST: 1; // 0  Represents whether USB bus reset is released
+        uint32_t BUS_RESET_ST: 1; // 0 (RO)  Represents whether USB bus reset is released
         uint32_t RESERVED: 31; // 1-31
     } BITS;
 } __usbSerialJtag_busResetStReg_t;
+
+/**
+ * Masks definition for the __usbSerialJtag_busResetStReg_t register
+ */
+#define mUSBSERIALJTAG_BUSRESETSTREG_BUS_RESET_ST 0x00000001UL // Get (RO) Represents whether USB bus reset is released
+#define mUSBSERIALJTAG_BUSRESETSTREG_RESET 0x00000001UL // Reset value for the __usbSerialJtag_busResetStReg_t register
 
 
 /********************************************************************************************************************************
@@ -380,4 +568,66 @@ typedef union {
         uint32_t DATE: 32; // 0-31 Version control register
     } BITS;
 } __usbSerialJtag_dateReg_t;
+
+/**
+ * Masks definition for the __usbSerialJtag_dateReg_t register
+ */
+#define mUSBSERIALJTAG_DATEREG_DATE 0xFFFFFFFFUL // Get (RO) Version control register
+#define mUSBSERIALJTAG_DATEREG_RESET 0x02109220UL // Reset value for the __usbSerialJtag_dateReg_t register
+
+/**
+ * \typedef __usbSerialJtag__t
+*/
+typedef struct {
+    //Configuration Registers
+    volatile __usbSerialJtag_ep1Reg_t ep1Reg; // 0x0000 : FIFO access for the CDC-ACM data IN and OUT endpoints
+    volatile __usbSerialJtag_ep1ConfReg_t ep1ConfReg; // 0x0004 : Configuration and control registers for the CDC-ACM FIFOs
+    
+    //Interrupt Registers
+    volatile __usbSerialJtag_intStatusReg_t intRawReg; // 0x0008 : Interrupt RAW status register
+    volatile __usbSerialJtag_intStatusReg_t intStReg; // 0x000C : Interrupt status register
+    volatile __usbSerialJtag_intStatusReg_t intEnaReg; // 0x0010 : Interrupt enable register
+    volatile __usbSerialJtag_intStatusReg_t intClrReg; // 0x0014 : Interrupt clear register
+
+    //Configuration Registers
+    volatile __usbSerialJtag_conf0Reg_t conf0Reg; // 0x0018 : PHY hardware configuration
+    volatile __usbSerialJtag_testReg_t testReg; // 0x001C : Registers used for debugging the PHY
+
+    //Status Registers
+    volatile __usbSerialJtag_jfifoStReg_t jfifoStReg; // 0x0020 : JTAG FIFO status and control registers
+    volatile __usbSerialJtag_framNumReg_t framNumReg; // 0x0024 : Last received SOF frame index register
+    volatile __usbSerialJtag_inEpxStReg_t inEp0StReg; // 0x0028 : Control IN endpoint status information
+    volatile __usbSerialJtag_inEpxStReg_t inEp1StReg; // 0x002C : CDC-ACM IN endpoint status information
+    volatile __usbSerialJtag_inEpxStReg_t inEp2StReg; // 0x0030 : CDC-ACM interrupt IN endpoint status information
+    volatile __usbSerialJtag_inEpxStReg_t inEp3StReg; // 0x0034 : JTAG IN endpoint status information
+    volatile __usbSerialJtag_outEpxStReg_t outEp0StReg; // 0x0038 : Control OUT endpoint status information
+    volatile __usbSerialJtag_outEpxStReg_t outEp1StReg; // 0x003C : CDC-ACM OUT endpoint status information
+    volatile __usbSerialJtag_outEpxStReg_t outEp2StReg; // 0x0040 : JTAG OUT endpoint status information
+
+    //Configuration Registers
+    volatile __usbSerialJtag_miscConfReg_t miscConfReg; // 0x0044 : Clock enable control
+    volatile __usbSerialJtag_memConfReg_t memConfReg; // 0x0048 : Memory power control
+    volatile __usbSerialJtag_chipRstReg_t chipRstReg; // 0x004C : CDC-ACM chip reset control
+
+    //Status Registers
+    volatile __usbSerialJtag_setLineCodeW0Reg_t setLineCodeW0Reg; // 0x0050 : W0 of SET_LINE_CODING command
+    volatile __usbSerialJtag_setLineCodeW1Reg_t setLineCodeW1Reg; // 0x0054 : W1 of SET_LINE_CODING command
+
+    //Configuration Registers
+    volatile __usbSerialJtag_getLineCodeW0Reg_t getLineCodeW0Reg; // 0x0058 : W0 of GET_LINE_CODING command
+    volatile __usbSerialJtag_getLineCodeW1Reg_t getLineCodeW1Reg; // 0x005C : W1 of GET_LINE_CODING command
+    volatile __usbSerialJtag_configUpdateReg_t configUpdateReg; // 0x0060 : Configuration registers’ value update
+    volatile __usbSerialJtag_serAfifoConficReg_t serAfifoConficReg; // 0x0064 : Serial AFIFO configure register
+
+    //Status Registers
+    volatile __usbSerialJtag_busResetStReg_t busResetStReg; // 0x0068 : USB Bus reset status register
+
+    uint32_t RESERVED_0[5]; // 0x006C-0x007C
+
+    //Version Registers
+    volatile __usbSerialJtag_dateReg_t dateReg; // 0x0080 : Date register
+
+} __usbSerialJtag_t;
+
+
 #endif // USB_SERIAL_JTAG_ESP32_C6_LIB_H
