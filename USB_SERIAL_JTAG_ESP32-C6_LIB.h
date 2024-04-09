@@ -136,6 +136,25 @@ typedef union {
 #define mUSBSERIALJTAG_CONF0REG_USB_PAD_ENABLE 0x00004000UL // Set/Get (R/W) Configures whether to enable USB pad function
 #define mUSBSERIALJTAG_CONF0REG_USB_JTAG_BRIDGE_EN 0x00008000UL // Set/Get (R/W) Configures whether to disconnect usb_jtag and in-ternal JTAG
 #define mUSBSERIALJTAG_CONF0REG_RESET 0x00004200UL // Reset value for the __usbSerialJtag_conf0Reg_t register
+/**
+ * Constant definitions for the __usbSerialJtag_conf0Reg_t register
+ */
+#define kUSBSERIALJTAG_CONF0REG_PHY_SEL_InternalPHY 0 // Constant value to set the PHY_SEL field
+#define kUSBSERIALJTAG_CONF0REG_PHY_SEL_ExternalPHY 1 // Constant value to set the PHY_SEL field
+#define kUSBSERIALJTAG_CONF0REG_VREFH_1V76 0 // Constant value to set the VREFH field
+#define kUSBSERIALJTAG_CONF0REG_VREFH_1V84 1 // Constant value to set the VREFH field
+#define kUSBSERIALJTAG_CONF0REG_VREFH_1V92 2 // Constant value to set the VREFH field
+#define kUSBSERIALJTAG_CONF0REG_VREFH_2V00 3 // Constant value to set the VREFH field
+#define kUSBSERIALJTAG_CONF0REG_VREFL_0V80 0 // Constant value to set the VREFL field
+#define kUSBSERIALJTAG_CONF0REG_VREFL_0V88 1 // Constant value to set the VREFL field
+#define kUSBSERIALJTAG_CONF0REG_VREFL_0V96 2 // Constant value to set the VREFL field
+#define kUSBSERIALJTAG_CONF0REG_VREFL_1V04 3 // Constant value to set the VREFL field
+#define kUSBSERIALJTAG_CONF0REG_PULLUP_VALUE_2K2 0 // Constant value to set the PULLUP_VALUE field
+#define kUSBSERIALJTAG_CONF0REG_PULLUP_VALUE_1K1 1 // Constant value to set the PULLUP_VALUE field
+#define kUSBSERIALJTAG_CONF0REG_JTAG_BRIDGE_EN_CONNECTEC 0 //  Constant value to set the USB_JTAG_BRIDGE_EN field - usb_jtag is connected to the internal JTAG port of CPU
+#define kUSBSERIALJTAG_CONF0REG_JTAG_BRIDGE_EN_DISCONNECTED 1 //  Constant value to set the USB_JTAG_BRIDGE_EN field - usb_jtag and the internal JTAG are disconnected, MTMS, MTDI, and MTCK are output through GPIO Matrix, and MTDO is input through GPIO Matrix
+
+
 
 
 /**
@@ -628,6 +647,75 @@ typedef struct {
     volatile __usbSerialJtag_dateReg_t dateReg; // 0x0080 : Date register
 
 } __usbSerialJtag_t;
+
+#define kUSB_SERIAL_JTAG_BASE_ADDR 0x6000F000UL
+#define sUSB_SERIAL_JTAG (*((__usbSerialJtag_t *) kUSB_SERIAL_JTAG_BASE_ADDR))
+
+
+/**
+ * \addtogroup USB_SERIAL_JTAG_EP1_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_EP1 sUSB_SERIAL_JTAG.ep1Reg.WORD // FIFO access for the CDC-ACM data IN and OUT endpoints
+#define bUSB_SERIAL_JTAG_EP1_RDWR_BYTE sUSB_SERIAL_JTAG.ep1Reg.BITS.RDWR_BYTE // 0-7 (R/W) Represents the byte to be written to the FIFO or read from UART TX/RX FIFO
+/** @} */
+
+/**
+ * \addtogroup USB_SERIAL_JTAG_EP1_CONF_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_EP1_CONF sUSB_SERIAL_JTAG.ep1ConfReg.WORD // Configuration and control registers for the CDC-ACM FIFOs
+#define bUSB_SERIAL_JTAG_EP1_CONF_WR_DONE sUSB_SERIAL_JTAG.ep1ConfReg.BITS.WR_DONE // 0 (WT)  Configures whether to represent writing byte data to UART TX FIFO is done
+#define bUSB_SERIAL_JTAG_EP1_CONF_SERIAL_IN_EP_DATA_FREE sUSB_SERIAL_JTAG.ep1ConfReg.BITS.SERIAL_IN_EP_DATA_FREE // 1 (RO)  Represents whether UART TX FIFO has space available
+#define bUSB_SERIAL_JTAG_EP1_CONF_SERIAL_OUT_EP_DATA_AVAIL sUSB_SERIAL_JTAG.ep1ConfReg.BITS.SERIAL_OUT_EP_DATA_AVAIL // 2 (RO)  Represents whether there is data in UART RX FIFO
+/** @} */
+
+/**
+ * \addtogroup USB_SERIAL_JTAG_CONF0_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_CONF0 sUSB_SERIAL_JTAG.conf0Reg.WORD // PHY hardware configuration
+#define bUSB_SERIAL_JTAG_CONF0_PHY_SEL sUSB_SERIAL_JTAG.conf0Reg.BITS.PHY_SEL // 0 (R/W)  Configures whether to select internal or external PHY
+#define bUSB_SERIAL_JTAG_CONF0_EXCHG_PINS_OVERRIDE sUSB_SERIAL_JTAG.conf0Reg.BITS.EXCHG_PINS_OVERRIDE // 1 (R/W)  Configures whether to override the exchange pins
+#define bUSB_SERIAL_JTAG_CONF0_EXCHG_PINS sUSB_SERIAL_JTAG.conf0Reg.BITS.EXCHG_PINS // 2 (R/W)   Configures whether to enable USB D+ D- exchange
+#define bUSB_SERIAL_JTAG_CONF0_VREFH sUSB_SERIAL_JTAG.conf0Reg.BITS.VREFH // 3-4 (R/W) Configures single-end input high threshold
+#define bUSB_SERIAL_JTAG_CONF0_VREFL sUSB_SERIAL_JTAG.conf0Reg.BITS.VREFL // 5-6 (R/W) Configures single-end input low threshold
+#define bUSB_SERIAL_JTAG_CONF0_VREF_OVERRIDE sUSB_SERIAL_JTAG.conf0Reg.BITS.VREF_OVERRIDE // 7 (R/W)  Configures whether to enable software control input thresh-old
+#define bUSB_SERIAL_JTAG_CONF0_PAD_PULL_OVERRIDE sUSB_SERIAL_JTAG.conf0Reg.BITS.PAD_PULL_OVERRIDE // 8 (R/W)  Configures whether to enable software to control USB D+ D- pullup and pulldown
+#define bUSB_SERIAL_JTAG_CONF0_DP_PULLUP sUSB_SERIAL_JTAG.conf0Reg.BITS.DP_PULLUP // 9 (R/W)  Configures whether to enable USB D+ pull up when PAD_PULL_OVERRIDE is 1
+#define bUSB_SERIAL_JTAG_CONF0_DP_PULLDOWN sUSB_SERIAL_JTAG.conf0Reg.BITS.DP_PULLDOWN // 10 (R/W) Configures whether to enable USB D+ pull down when PAD_PULL_OVERRIDE is 1
+#define bUSB_SERIAL_JTAG_CONF0_DM_PULLUP sUSB_SERIAL_JTAG.conf0Reg.BITS.DM_PULLUP // 11 (R/W) Configures whether to enable USB D- pull up when PAD_PULL_OVERRIDE is 1
+#define bUSB_SERIAL_JTAG_CONF0_DM_PULLDOWN sUSB_SERIAL_JTAG.conf0Reg.BITS.DM_PULLDOWN // 12 (R/W) Configures whether to enable USB D- pull down when PAD_PULL_OVERRIDE is 1
+#define bUSB_SERIAL_JTAG_CONF0_PULLUP_VALUE sUSB_SERIAL_JTAG.conf0Reg.BITS.PULLUP_VALUE // 13 (R/W) Configures the pull up value when PAD_PULL_OVERRIDE is 1
+#define bUSB_SERIAL_JTAG_CONF0_USB_PAD_ENABLE sUSB_SERIAL_JTAG.conf0Reg.BITS.USB_PAD_ENABLE // 14 (R/W) Configures whether to enable USB pad function
+#define bUSB_SERIAL_JTAG_CONF0_USB_JTAG_BRIDGE_EN sUSB_SERIAL_JTAG.conf0Reg.BITS.USB_JTAG_BRIDGE_EN // 15 (R/W) Configures whether to disconnect usb_jtag and in-ternal JTAG
+/** @} */
+
+/**
+ * \addtogroup USB_SERIAL_JTAG_TEST_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_TEST sUSB_SERIAL_JTAG.testReg.WORD // Registers used for debugging the PHY
+#define bUSB_SERIAL_JTAG_TEST_ENABLE sUSB_SERIAL_JTAG.testReg.BITS.TEST_ENABLE // 0 (R/W)  Configures whether to enable the test mode of the USB pad
+#define bUSB_SERIAL_JTAG_TEST_USB_OE sUSB_SERIAL_JTAG.testReg.BITS.TEST_USB_OE // 1 (R/W)  Configures whether to enable USB pad output
+#define bUSB_SERIAL_JTAG_TEST_TX_DP sUSB_SERIAL_JTAG.testReg.BITS.TEST_TX_DP // 2 (R/W)  Configures value of USB D+ in test mode when TEST_USB_OE is 1
+#define bUSB_SERIAL_JTAG_TEST_TX_DM sUSB_SERIAL_JTAG.testReg.BITS.TEST_TX_DM // 3 (R/W)  Configures value of USB D- in test mode when TEST_USB_OE is 1
+#define bUSB_SERIAL_JTAG_TEST_RX_RCV sUSB_SERIAL_JTAG.testReg.BITS.TEST_RX_RCV // 4 (RO)  Represents the current logical level of the voltage difference between USB D- and USB D+ pads in test mode
+#define bUSB_SERIAL_JTAG_TEST_RX_DP sUSB_SERIAL_JTAG.testReg.BITS.TEST_RX_DP // 5 (RO)  Represents the logical level of the USB D+ pad in test mode
+#define bUSB_SERIAL_JTAG_TEST_RX_DM sUSB_SERIAL_JTAG.testReg.BITS.TEST_RX_DM // 6 (RO)  Represents the logical level of the USB D- pad in test mode
+/** @} */
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #endif // USB_SERIAL_JTAG_ESP32_C6_LIB_H
