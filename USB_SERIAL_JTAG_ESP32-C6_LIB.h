@@ -643,7 +643,7 @@ typedef struct {
     //Status Registers
     volatile __usbSerialJtag_busResetStReg_t busResetStReg; // 0x0068 : USB Bus reset status register
 
-    uint32_t RESERVED_0[5]; // 0x006C-0x007C
+    volatile uint32_t RESERVED_0[5]; // 0x006C-0x007C
 
     //Version Registers
     volatile __usbSerialJtag_dateReg_t dateReg; // 0x0080 : Date register
