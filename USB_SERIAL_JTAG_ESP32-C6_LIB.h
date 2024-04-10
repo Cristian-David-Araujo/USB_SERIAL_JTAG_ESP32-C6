@@ -230,7 +230,7 @@ typedef union {
 
 /**
  * \typedef __usbSerialJtag_chipRstReg_t
- * CDC-ACM chip reset control
+ * @brief ACM chip reset control
  */
 typedef union {
     uint32_t WORD;
@@ -299,7 +299,7 @@ typedef union {
 typedef union {
     uint32_t WORD;
     struct {
-        uint32_t CONFIG_UPDATE: 1; // 0 (WT)  Configures whether to update the value of configuration registers from APB clock domain to 48 MHz clock domain.
+        uint32_t CONFIG_UPDATE: 1; // 0 (WT)  Configures whether to update the value of configuration registers from APB clock domain to 48 MHz clock domain
         uint32_t RESERVED: 31; // 1-31
     } BITS;
 } __usbSerialJtag_configUpdateReg_t;
@@ -594,6 +594,10 @@ typedef union {
 #define mUSBSERIALJTAG_DATEREG_DATE 0xFFFFFFFFUL // Get (RO) Version control register
 #define mUSBSERIALJTAG_DATEREG_RESET 0x02109220UL // Reset value for the __usbSerialJtag_dateReg_t register
 
+
+/********************************************************************************************************************************
+*************************************************Fields Structure Definition ****************************************************
+*********************************************************************************************************************************/
 /**
  * \typedef __usbSerialJtag__t
 */
@@ -703,6 +707,196 @@ typedef struct {
 #define bUSB_SERIAL_JTAG_TEST_RX_RCV sUSB_SERIAL_JTAG.testReg.BITS.TEST_RX_RCV // 4 (RO)  Represents the current logical level of the voltage difference between USB D- and USB D+ pads in test mode
 #define bUSB_SERIAL_JTAG_TEST_RX_DP sUSB_SERIAL_JTAG.testReg.BITS.TEST_RX_DP // 5 (RO)  Represents the logical level of the USB D+ pad in test mode
 #define bUSB_SERIAL_JTAG_TEST_RX_DM sUSB_SERIAL_JTAG.testReg.BITS.TEST_RX_DM // 6 (RO)  Represents the logical level of the USB D- pad in test mode
+/** @} */
+
+/**
+ * \addtogroup USB_SERIAL_JTAG_MISC_CONF_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_MISC_CONF sUSB_SERIAL_JTAG.miscConfReg.WORD // Clock enable control
+#define bUSB_SERIAL_JTAG_MISC_CONF_CLK_EN sUSB_SERIAL_JTAG.miscConfReg.BITS.CLK_EN // 0 (R/W)  Configures whether to force clock on for registerk
+/** @} */
+
+/**
+ * \addtogroup USB_SERIAL_JTAG_MEM_CONF_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_MEM_CONF sUSB_SERIAL_JTAG.memConfReg.WORD // Memory power control
+#define bUSB_SERIAL_JTAG_USB_MEM_PD sUSB_SERIAL_JTAG.memConfReg.BITS.USB_MEM_PD // 0 (R/W)  Configures whether to power down USB memory
+#define bUSB_SERIAL_JTAG_USB_MEM_CLK_EN sUSB_SERIAL_JTAG.memConfReg.BITS.USB_MEM_CLK_EN // 1 (R/W)  Configures whether to force clock on for USB memory
+/** @} */
+
+/**
+ * \addtogroup USB_SERIAL_JTAG_CHIP_RST_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_CHIP_RST sUSB_SERIAL_JTAG.chipRstReg.WORD // CDC-ACM chip reset control
+#define bUSB_SERIAL_JTAG_RTS sUSB_SERIAL_JTAG.chipRstReg.BITS.JTAG_RTS // 0 (RO)  Represents the state of RTS signal as set by the most recent SET_LINE_CODING command
+#define bUSB_SERIAL_JTAG_DTR sUSB_SERIAL_JTAG.chipRstReg.BITS.JTAG_DTR // 1 (RO)  Represents the state of DTR signal as set by the most recent SET_LINE_CODING command
+#define bUSB_SERIAL_JTAG_USB_UART_CHIP_RST_DIS sUSB_SERIAL_JTAG.chipRstReg.BITS.USB_UART_CHIP_RST_DIS // 2 (R/W)  Configures whether to disable chip reset from USB serial channel
+/** @} */
+
+/**
+ * \addtogroup USB_SERIAL_JTAG_GET_LINE_CODE_W0_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_GET_LINE_CODE_W0 sUSB_SERIAL_JTAG.getLineCodeW0Reg.WORD // W0 of GET_LINE_CODING command
+/** @} */
+
+/**
+ * \addtogroup USB_SERIAL_JTAG_GET_LINE_CODE_W1_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_GET_LINE_CODE_W1 sUSB_SERIAL_JTAG.getLineCodeW1Reg.WORD // W1 of GET_LINE_CODING command
+#define bUSB_SERIAL_JTAG_GET_BDATA_BITS sUSB_SERIAL_JTAG.getLineCodeW1Reg.BITS.GET_BDATA_BITS // 0-7 (R/W) Configures the value of bDataBits set by software, which is requested by GET_LINE_CODING command
+#define bUSB_SERIAL_JTAG_GET_BPARITY_TYPE sUSB_SERIAL_JTAG.getLineCodeW1Reg.BITS.GET_BPARITY_TYPE // 8-15 (R/W) Configures the value of bParityType set by software, which is requested by GET_LINE_CODING command
+#define bUSB_SERIAL_JTAG_GET_BCHAR_FORMAT sUSB_SERIAL_JTAG.getLineCodeW1Reg.BITS.GET_BCHAR_FORMAT // 16-23 (R/W) Configures the value of bCharFormat set by software, which is requested by GET_LINE_CODING command
+/** @} */
+
+/**
+ * \addtogroup USB_SERIAL_JTAG_CONFIG_UPDATE_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_CONFIG_UPDATE sUSB_SERIAL_JTAG.configUpdateReg.WORD // Configuration registers’ value update
+#define bUSB_SERIAL_JTAG_CONFIG_UPDATE sUSB_SERIAL_JTAG.configUpdateReg.BITS.UPDATE // 0 (WT)  Configures whether to update the value of configuration registers from APB clock domain to 48 MHz clock domain
+/** @} */
+
+/**
+ * \addtogroup USB_SERIAL_JTAG_SER_AFIFO_CONFIC_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_SER_AFIFO_CONFIC sUSB_SERIAL_JTAG.serAfifoConficReg.WORD // Serial AFIFO configure register
+#define bUSB_SERIAL_JTAG_SERIAL_IN_AFIFO_RESET_WR sUSB_SERIAL_JTAG.serAfifoConficReg.BITS.SERIAL_IN_AFIFO_RESET_WR // 0 (R/W)  Configures whether to reset CDC_ACM IN async FIFO write clock domain
+#define bUSB_SERIAL_JTAG_SERIAL_IN_AFIFO_RESET_RD sUSB_SERIAL_JTAG.serAfifoConficReg.BITS.SERIAL_IN_AFIFO_RESET_RD // 1 (R/W)  Configures whether to reset CDC_ACM IN async FIFO read clock domain
+#define bUSB_SERIAL_JTAG_SERIAL_OUT_AFIFO_RESET_WR sUSB_SERIAL_JTAG.serAfifoConficReg.BITS.SERIAL_OUT_AFIFO_RESET_WR // 2 (R/W)  Configures whether to reset CDC_ACM OUT async FIFO write clock domain
+#define bUSB_SERIAL_JTAG_SERIAL_OUT_AFIFO_RESET_RD sUSB_SERIAL_JTAG.serAfifoConficReg.BITS.SERIAL_OUT_AFIFO_RESET_RD // 3 (R/W)  Configures whether to reset CDC_ACM OUT async FIFO read clock domain
+#define bUSB_SERIAL_JTAG_SERIAL_OUT_AFIFO_REMPTY sUSB_SERIAL_JTAG.serAfifoConficReg.BITS.SERIAL_OUT_AFIFO_REMPTY // 4 (RO)  Represents CDC_ACM OUT async FIFO empty signal in read clock domain
+#define bUSB_SERIAL_JTAG_SERIAL_IN_AFIFO_WFULL sUSB_SERIAL_JTAG.serAfifoConficReg.BITS.SERIAL_IN_AFIFO_WFULL // 5 (RO)  Represents CDC_ACM IN async FIFO full signal in write clock domain
+/** @} */
+
+/**
+ * \addtogroup USB_SERIAL_JTAG_INT_RAW_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_INT_RAW sUSB_SERIAL_JTAG.intRawReg.WORD // Interrupt RAW status register
+#define bUSB_SERIAL_JTAG_JTAG_IN_FLUSH_INT_RAW sUSB_SERIAL_JTAG.intRawReg.BITS.IN_FLUSH_INT // 0 (R/WTC/SS)  Interrupt status of JTAG_IN_FLUSH_INT
+#define bUSB_SERIAL_JTAG_SOF_INT_RAW sUSB_SERIAL_JTAG.intRawReg.BITS.SOF_INT // 1 (R/WTC/SS)  Interrupt status of SOF_INT
+#define bUSB_SERIAL_JTAG_SERIAL_OUT_RECV_PKT_INT_RAW sUSB_SERIAL_JTAG.intRawReg.BITS.OUT_RECV_PKT_INT // 2 (R/WTC/SS)  Interrupt status of OUT_RECV_PKT_INT
+#define bUSB_SERIAL_JTAG_SERIAL_IN_EMPTY_INT_RAW sUSB_SERIAL_JTAG.intRawReg.BITS.IN_EMPTY_INT // 3 (R/WTC/SS)  Interrupt status of IN_EMPTY_INT
+#define bUSB_SERIAL_JTAG_PID_ERR_INT_RAW sUSB_SERIAL_JTAG.intRawReg.BITS.PID_ERR_INT // 4 (R/WTC/SS)  Interrupt status of PID_ERR_INT
+#define bUSB_SERIAL_JTAG_CRC5_ERR_INT_RAW sUSB_SERIAL_JTAG.intRawReg.BITS.CRC5_ERR_INT // 5 (R/WTC/SS)  Interrupt status of CRC5_ERR_INT
+#define bUSB_SERIAL_JTAG_CRC16_ERR_INT_RAW sUSB_SERIAL_JTAG.intRawReg.BITS.CRC16_ERR_INT // 6 (R/WTC/SS)  Interrupt status of CRC16_ERR_INT
+#define bUSB_SERIAL_JTAG_STUFF_ERR_INT_RAW sUSB_SERIAL_JTAG.intRawReg.BITS.STUFF_ERR_INT // 7 (R/WTC/SS)  Interrupt status of STUFF_ERR_INT
+#define bUSB_SERIAL_JTAG_IN_TOKEN_REC_IN_EP1_INT_RAW sUSB_SERIAL_JTAG.intRawReg.BITS.IN_TOKEN_REC_IN_EP1_INT // 8 (R/WTC/SS)  Interrupt status of IN_TOKEN_REC_IN_EP1_INT
+#define bUSB_SERIAL_JTAG_USB_BUS_RESET_INT_RAW sUSB_SERIAL_JTAG.intRawReg.BITS.USB_BUS_RESET_INT // 9 (R/WTC/SS)  Interrupt status of USB_BUS_RESET_INT
+#define bUSB_SERIAL_JTAG_OUT_EP1_ZERO_PAYLOAD_INT_RAW sUSB_SERIAL_JTAG.intRawReg.BITS.OUT_EP1_ZERO_PAYLOAD_INT // 10 (R/WTC/SS) Interrupt status of OUT_EP1_ZERO_PAYLOAD_INT
+#define bUSB_SERIAL_JTAG_OUT_EP2_ZERO_PAYLOAD_INT_RAW sUSB_SERIAL_JTAG.intRawReg.BITS.OUT_EP2_ZERO_PAYLOAD_INT // 11 (R/WTC/SS) Interrupt status of OUT_EP2_ZERO_PAYLOAD_INT
+#define bUSB_SERIAL_JTAG_RTS_CHG_INT_RAW sUSB_SERIAL_JTAG.intRawReg.BITS.RTS_CHG_INT // 12 (R/WTC/SS) Interrupt status of RTS_CHG_INT
+#define bUSB_SERIAL_JTAG_DTR_CHG_INT_RAW sUSB_SERIAL_JTAG.intRawReg.BITS.DTR_CHG_INT // 13 (R/WTC/SS) Interrupt status of DTR_CHG_INT
+#define bUSB_SERIAL_JTAG_GET_LINE_CODE_INT_RAW sUSB_SERIAL_JTAG.intRawReg.BITS.GET_LINE_CODE_INT // 14 (R/WTC/SS) Interrupt status of GET_LINE_CODE_INT
+#define bUSB_SERIAL_JTAG_SET_LINE_CODE_INT_RAW sUSB_SERIAL_JTAG.intRawReg.BITS.SET_LINE_CODE_INT // 15 (R/WTC/SS) Interrupt status of SET_LINE_CODE_INT
+/** @} */
+
+/**
+ * \addtogroup USB_SERIAL_JTAG_INT_ST_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_INT_ST sUSB_SERIAL_JTAG.intStReg.WORD // Interrupt ST status register
+#define bUSB_SERIAL_JTAG_JTAG_IN_FLUSH_INT_ST sUSB_SERIAL_JTAG.intStReg.BITS.IN_FLUSH_INT // 0 (R/WTC/SS)  Interrupt status of JTAG_IN_FLUSH_INT
+#define bUSB_SERIAL_JTAG_SOF_INT_ST sUSB_SERIAL_JTAG.intStReg.BITS.SOF_INT // 1 (R/WTC/SS)  Interrupt status of SOF_INT
+#define bUSB_SERIAL_JTAG_SERIAL_OUT_RECV_PKT_INT_ST sUSB_SERIAL_JTAG.intStReg.BITS.OUT_RECV_PKT_INT // 2 (R/WTC/SS)  Interrupt status of OUT_RECV_PKT_INT
+#define bUSB_SERIAL_JTAG_SERIAL_IN_EMPTY_INT_ST sUSB_SERIAL_JTAG.intStReg.BITS.IN_EMPTY_INT // 3 (R/WTC/SS)  Interrupt status of IN_EMPTY_INT
+#define bUSB_SERIAL_JTAG_PID_ERR_INT_ST sUSB_SERIAL_JTAG.intStReg.BITS.PID_ERR_INT // 4 (R/WTC/SS)  Interrupt status of PID_ERR_INT
+#define bUSB_SERIAL_JTAG_CRC5_ERR_INT_ST sUSB_SERIAL_JTAG.intStReg.BITS.CRC5_ERR_INT // 5 (R/WTC/SS)  Interrupt status of CRC5_ERR_INT
+#define bUSB_SERIAL_JTAG_CRC16_ERR_INT_ST sUSB_SERIAL_JTAG.intStReg.BITS.CRC16_ERR_INT // 6 (R/WTC/SS)  Interrupt status of CRC16_ERR_INT
+#define bUSB_SERIAL_JTAG_STUFF_ERR_INT_ST sUSB_SERIAL_JTAG.intStReg.BITS.STUFF_ERR_INT // 7 (R/WTC/SS)  Interrupt status of STUFF_ERR_INT
+#define bUSB_SERIAL_JTAG_IN_TOKEN_REC_IN_EP1_INT_ST sUSB_SERIAL_JTAG.intStReg.BITS.IN_TOKEN_REC_IN_EP1_INT // 8 (R/WTC/SS)  Interrupt status of IN_TOKEN_REC_IN_EP1_INT
+#define bUSB_SERIAL_JTAG_USB_BUS_RESET_INT_ST sUSB_SERIAL_JTAG.intStReg.BITS.USB_BUS_RESET_INT // 9 (R/WTC/SS)  Interrupt status of USB_BUS_RESET_INT
+#define bUSB_SERIAL_JTAG_OUT_EP1_ZERO_PAYLOAD_INT_ST sUSB_SERIAL_JTAG.intStReg.BITS.OUT_EP1_ZERO_PAYLOAD_INT // 10 (R/WTC/SS) Interrupt status of OUT_EP1_ZERO_PAYLOAD_INT
+#define bUSB_SERIAL_JTAG_OUT_EP2_ZERO_PAYLOAD_INT_ST sUSB_SERIAL_JTAG.intStReg.BITS.OUT_EP2_ZERO_PAYLOAD_INT // 11 (R/WTC/SS) Interrupt status of OUT_EP2_ZERO_PAYLOAD_INT
+#define bUSB_SERIAL_JTAG_RTS_CHG_INT_ST sUSB_SERIAL_JTAG.intStReg.BITS.RTS_CHG_INT // 12 (R/WTC/SS) Interrupt status of RTS_CHG_INT
+#define bUSB_SERIAL_JTAG_DTR_CHG_INT_ST sUSB_SERIAL_JTAG.intStReg.BITS.DTR_CHG_INT // 13 (R/WTC/SS) Interrupt status of DTR_CHG_INT
+#define bUSB_SERIAL_JTAG_GET_LINE_CODE_INT_ST sUSB_SERIAL_JTAG.intStReg.BITS.GET_LINE_CODE_INT // 14 (R/WTC/SS) Interrupt status of GET_LINE_CODE_INT
+#define bUSB_SERIAL_JTAG_SET_LINE_CODE_INT_ST sUSB_SERIAL_JTAG.intStReg.BITS.SET_LINE_CODE_INT // 15 (R/WTC/SS) Interrupt status of SET_LINE_CODE_INT
+/** @} */
+
+/**
+ * \addtogroup USB_SERIAL_JTAG_INT_ENA_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_INT_ENA sUSB_SERIAL_JTAG.intEnaReg.WORD // Interrupt ENA status register
+#define bUSB_SERIAL_JTAG_JTAG_IN_FLUSH_INT_ENA sUSB_SERIAL_JTAG.intEnaReg.BITS.IN_FLUSH_INT // 0 (R/WTC/SS)  Interrupt status of JTAG_IN_FLUSH_INT
+#define bUSB_SERIAL_JTAG_SOF_INT_ENA sUSB_SERIAL_JTAG.intEnaReg.BITS.SOF_INT // 1 (R/WTC/SS)  Interrupt status of SOF_INT
+#define bUSB_SERIAL_JTAG_SERIAL_OUT_RECV_PKT_INT_ENA sUSB_SERIAL_JTAG.intEnaReg.BITS.OUT_RECV_PKT_INT // 2 (R/WTC/SS)  Interrupt status of OUT_RECV_PKT_INT
+#define bUSB_SERIAL_JTAG_SERIAL_IN_EMPTY_INT_ENA sUSB_SERIAL_JTAG.intEnaReg.BITS.IN_EMPTY_INT // 3 (R/WTC/SS)  Interrupt status of IN_EMPTY_INT
+#define bUSB_SERIAL_JTAG_PID_ERR_INT_ENA sUSB_SERIAL_JTAG.intEnaReg.BITS.PID_ERR_INT // 4 (R/WTC/SS)  Interrupt status of PID_ERR_INT
+#define bUSB_SERIAL_JTAG_CRC5_ERR_INT_ENA sUSB_SERIAL_JTAG.intEnaReg.BITS.CRC5_ERR_INT // 5 (R/WTC/SS)  Interrupt status of CRC5_ERR_INT
+#define bUSB_SERIAL_JTAG_CRC16_ERR_INT_ENA sUSB_SERIAL_JTAG.intEnaReg.BITS.CRC16_ERR_INT // 6 (R/WTC/SS)  Interrupt status of CRC16_ERR_INT
+#define bUSB_SERIAL_JTAG_STUFF_ERR_INT_ENA sUSB_SERIAL_JTAG.intEnaReg.BITS.STUFF_ERR_INT // 7 (R/WTC/SS)  Interrupt status of STUFF_ERR_INT
+#define bUSB_SERIAL_JTAG_IN_TOKEN_REC_IN_EP1_INT_ENA sUSB_SERIAL_JTAG.intEnaReg.BITS.IN_TOKEN_REC_IN_EP1_INT // 8 (R/WTC/SS)  Interrupt status of IN_TOKEN_REC_IN_EP1_INT
+#define bUSB_SERIAL_JTAG_USB_BUS_RESET_INT_ENA sUSB_SERIAL_JTAG.intEnaReg.BITS.USB_BUS_RESET_INT // 9 (R/WTC/SS)  Interrupt status of USB_BUS_RESET_INT
+#define bUSB_SERIAL_JTAG_OUT_EP1_ZERO_PAYLOAD_INT_ENA sUSB_SERIAL_JTAG.intEnaReg.BITS.OUT_EP1_ZERO_PAYLOAD_INT // 10 (R/WTC/SS) Interrupt status of OUT_EP1_ZERO_PAYLOAD_INT
+#define bUSB_SERIAL_JTAG_OUT_EP2_ZERO_PAYLOAD_INT_ENA sUSB_SERIAL_JTAG.intEnaReg.BITS.OUT_EP2_ZERO_PAYLOAD_INT // 11 (R/WTC/SS) Interrupt status of OUT_EP2_ZERO_PAYLOAD_INT
+#define bUSB_SERIAL_JTAG_RTS_CHG_INT_ENA sUSB_SERIAL_JTAG.intEnaReg.BITS.RTS_CHG_INT // 12 (R/WTC/SS) Interrupt status of RTS_CHG_INT
+#define bUSB_SERIAL_JTAG_DTR_CHG_INT_ENA sUSB_SERIAL_JTAG.intEnaReg.BITS.DTR_CHG_INT // 13 (R/WTC/SS) Interrupt status of DTR_CHG_INT
+#define bUSB_SERIAL_JTAG_GET_LINE_CODE_INT_ENA sUSB_SERIAL_JTAG.intEnaReg.BITS.GET_LINE_CODE_INT // 14 (R/WTC/SS) Interrupt status of GET_LINE_CODE_INT
+#define bUSB_SERIAL_JTAG_SET_LINE_CODE_INT_ENA sUSB_SERIAL_JTAG.intEnaReg.BITS.SET_LINE_CODE_INT // 15 (R/WTC/SS) Interrupt status of SET_LINE_CODE_INT
+/** @} */
+
+/**
+ * \addtogroup USB_SERIAL_JTAG_INT_CLR_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_INT_CLR sUSB_SERIAL_JTAG.intClrReg.WORD // Interrupt CLR status register
+#define bUSB_SERIAL_JTAG_JTAG_IN_FLUSH_INT_CLR sUSB_SERIAL_JTAG.intClrReg.BITS.IN_FLUSH_INT // 0 (R/WTC/SS)  Interrupt status of JTAG_IN_FLUSH_INT
+#define bUSB_SERIAL_JTAG_SOF_INT_CLR sUSB_SERIAL_JTAG.intClrReg.BITS.SOF_INT // 1 (R/WTC/SS)  Interrupt status of SOF_INT
+#define bUSB_SERIAL_JTAG_SERIAL_OUT_RECV_PKT_INT_CLR sUSB_SERIAL_JTAG.intClrReg.BITS.OUT_RECV_PKT_INT // 2 (R/WTC/SS)  Interrupt status of OUT_RECV_PKT_INT
+#define bUSB_SERIAL_JTAG_SERIAL_IN_EMPTY_INT_CLR sUSB_SERIAL_JTAG.intClrReg.BITS.IN_EMPTY_INT // 3 (R/WTC/SS)  Interrupt status of IN_EMPTY_INT
+#define bUSB_SERIAL_JTAG_PID_ERR_INT_CLR sUSB_SERIAL_JTAG.intClrReg.BITS.PID_ERR_INT // 4 (R/WTC/SS)  Interrupt status of PID_ERR_INT
+#define bUSB_SERIAL_JTAG_CRC5_ERR_INT_CLR sUSB_SERIAL_JTAG.intClrReg.BITS.CRC5_ERR_INT // 5 (R/WTC/SS)  Interrupt status of CRC5_ERR_INT
+#define bUSB_SERIAL_JTAG_CRC16_ERR_INT_CLR sUSB_SERIAL_JTAG.intClrReg.BITS.CRC16_ERR_INT // 6 (R/WTC/SS)  Interrupt status of CRC16_ERR_INT
+#define bUSB_SERIAL_JTAG_STUFF_ERR_INT_CLR sUSB_SERIAL_JTAG.intClrReg.BITS.STUFF_ERR_INT // 7 (R/WTC/SS)  Interrupt status of STUFF_ERR_INT
+#define bUSB_SERIAL_JTAG_IN_TOKEN_REC_IN_EP1_INT_CLR sUSB_SERIAL_JTAG.intClrReg.BITS.IN_TOKEN_REC_IN_EP1_INT // 8 (R/WTC/SS)  Interrupt status of IN_TOKEN_REC_IN_EP1_INT
+#define bUSB_SERIAL_JTAG_USB_BUS_RESET_INT_CLR sUSB_SERIAL_JTAG.intClrReg.BITS.USB_BUS_RESET_INT // 9 (R/WTC/SS)  Interrupt status of USB_BUS_RESET_INT
+#define bUSB_SERIAL_JTAG_OUT_EP1_ZERO_PAYLOAD_INT_CLR sUSB_SERIAL_JTAG.intClrReg.BITS.OUT_EP1_ZERO_PAYLOAD_INT // 10 (R/WTC/SS) Interrupt status of OUT_EP1_ZERO_PAYLOAD_INT
+#define bUSB_SERIAL_JTAG_OUT_EP2_ZERO_PAYLOAD_INT_CLR sUSB_SERIAL_JTAG.intClrReg.BITS.OUT_EP2_ZERO_PAYLOAD_INT // 11 (R/WTC/SS) Interrupt status of OUT_EP2_ZERO_PAYLOAD_INT
+#define bUSB_SERIAL_JTAG_RTS_CHG_INT_CLR sUSB_SERIAL_JTAG.intClrReg.BITS.RTS_CHG_INT // 12 (R/WTC/SS) Interrupt status of RTS_CHG_INT
+#define bUSB_SERIAL_JTAG_DTR_CHG_INT_CLR sUSB_SERIAL_JTAG.intClrReg.BITS.DTR_CHG_INT // 13 (R/WTC/SS) Interrupt status of DTR_CHG_INT
+#define bUSB_SERIAL_JTAG_GET_LINE_CODE_INT_CLR sUSB_SERIAL_JTAG.intClrReg.BITS.GET_LINE_CODE_INT // 14 (R/WTC/SS) Interrupt status of GET_LINE_CODE_INT
+#define bUSB_SERIAL_JTAG_SET_LINE_CODE_INT_CLR sUSB_SERIAL_JTAG.intClrReg.BITS.SET_LINE_CODE_INT // 15 (R/WTC/SS) Interrupt status of SET_LINE_CODE_INT
+/** @} */
+
+/**
+ * \addtogroup USB_SERIAL_JTAG_JFIFO_ST_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_JFIFO_ST sUSB_SERIAL_JTAG.jfifoStReg.WORD // JTAG FIFO status and control registers
+#define bUSB_SERIAL_JTAG_IN_FIFO_CNT sUSB_SERIAL_JTAG.jfifoStReg.BITS.IN_FIFO_CNT // 0-1 (RO) Represents JTAG IN FIFO counter
+#define bUSB_SERIAL_JTAG_IN_FIFO_EMPTY sUSB_SERIAL_JTAG.jfifoStReg.BITS.IN_FIFO_EMPTY // 2 (RO) Represents whether JTAG IN FIFO is empty
+#define bUSB_SERIAL_JTAG_IN_FIFO_FULL sUSB_SERIAL_JTAG.jfifoStReg.BITS.IN_FIFO_FULL // 3 (RO) Represents whether JTAG IN FIFO is full
+#define bUSB_SERIAL_JTAG_OUT_FIFO_CNT sUSB_SERIAL_JTAG.jfifoStReg.BITS.OUT_FIFO_CNT // 4-5 (RO) Represents JTAG OUT FIFO counter
+#define bUSB_SERIAL_JTAG_OUT_FIFO_EMPTY sUSB_SERIAL_JTAG.jfifoStReg.BITS.OUT_FIFO_EMPTY // 6 (RO) Represents whether JTAG OUT FIFO is empty
+#define bUSB_SERIAL_JTAG_OUT_FIFO_FULL sUSB_SERIAL_JTAG.jfifoStReg.BITS.OUT_FIFO_FULL // 7 (RO) Represents whether JTAG OUT FIFO is full
+#define bUSB_SERIAL_JTAG_IN_FIFO_RESET sUSB_SERIAL_JTAG.jfifoStReg.BITS.IN_FIFO_RESET // 8 (R/W) Configures whether to reset JTAG IN FIFO
+#define bUSB_SERIAL_JTAG_OUT_FIFO_RESET sUSB_SERIAL_JTAG.jfifoStReg.BITS.OUT_FIFO_RESET // 9 (R/W) Configures whether to reset JTAG OUT FIFO
+/** @} */
+
+/**
+ * \addtogroup USB_SERIAL_JTAG_FRAM_NUM_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_FRAM_NUM sUSB_SERIAL_JTAG.framNumReg.WORD // Last received SOF frame index register
+#define bUSB_SERIAL_JTAG_SOF_FRAME_INDEX sUSB_SERIAL_JTAG.framNumReg.BITS.SOF_FRAME_INDEX // 0-10 (RO) Represents frame index of received SOF frame
+/** @} */
+
+/**
+ * \addtogroup USB_SERIAL_JTAG_IN_EP0_ST_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_IN_EP0_ST sUSB_SERIAL_JTAG.inEp0StReg.WORD // Control IN endpoint status information
+#define bUSB_SERIAL_JTAG_IN_EP0_STATE sUSB_SERIAL_JTAG.inEp0StReg.BITS.IN_EP_STATE // 0-1 (RO) Represents state of IN Endpoint 0
+#define bUSB_SERIAL_JTAG_IN_EP0_WR_ADDR sUSB_SERIAL_JTAG.inEp0StReg.BITS.IN_EP_WR_ADDR // 2-8 (RO) Represents write data address of IN endpoint 0
+#define bUSB_SERIAL_JTAG_IN_EP0_RD_ADDR sUSB_SERIAL_JTAG.inEp0StReg.BITS.IN_EP_RD_ADDR // 9-15 (RO) Represents read data address of IN endpoint 0
 /** @} */
 
 
