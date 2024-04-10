@@ -155,8 +155,6 @@ typedef union {
 #define kUSBSERIALJTAG_CONF0REG_JTAG_BRIDGE_EN_DISCONNECTED 1 //  Constant value to set the USB_JTAG_BRIDGE_EN field - usb_jtag and the internal JTAG are disconnected, MTMS, MTDI, and MTCK are output through GPIO Matrix, and MTDO is input through GPIO Matrix
 
 
-
-
 /**
  * \typedef __usbSerialJtag_testReg_t
  * Registers used for debugging the PHY
@@ -661,7 +659,7 @@ typedef struct {
  * @{
  */
 #define rUSB_SERIAL_JTAG_EP1 sUSB_SERIAL_JTAG.ep1Reg.WORD // FIFO access for the CDC-ACM data IN and OUT endpoints
-#define bUSB_SERIAL_JTAG_EP1_RDWR_BYTE sUSB_SERIAL_JTAG.ep1Reg.BITS.RDWR_BYTE // 0-7 (R/W) Represents the byte to be written to the FIFO or read from UART TX/RX FIFO
+#define bUSB_SERIAL_JTAG_RDWR_BYTE sUSB_SERIAL_JTAG.ep1Reg.BITS.RDWR_BYTE // 0-7 (R/W) Represents the byte to be written to the FIFO or read from UART TX/RX FIFO
 /** @} */
 
 /**
@@ -669,9 +667,9 @@ typedef struct {
  * @{
  */
 #define rUSB_SERIAL_JTAG_EP1_CONF sUSB_SERIAL_JTAG.ep1ConfReg.WORD // Configuration and control registers for the CDC-ACM FIFOs
-#define bUSB_SERIAL_JTAG_EP1_CONF_WR_DONE sUSB_SERIAL_JTAG.ep1ConfReg.BITS.WR_DONE // 0 (WT)  Configures whether to represent writing byte data to UART TX FIFO is done
-#define bUSB_SERIAL_JTAG_EP1_CONF_SERIAL_IN_EP_DATA_FREE sUSB_SERIAL_JTAG.ep1ConfReg.BITS.SERIAL_IN_EP_DATA_FREE // 1 (RO)  Represents whether UART TX FIFO has space available
-#define bUSB_SERIAL_JTAG_EP1_CONF_SERIAL_OUT_EP_DATA_AVAIL sUSB_SERIAL_JTAG.ep1ConfReg.BITS.SERIAL_OUT_EP_DATA_AVAIL // 2 (RO)  Represents whether there is data in UART RX FIFO
+#define bUSB_SERIAL_JTAG_WR_DONE sUSB_SERIAL_JTAG.ep1ConfReg.BITS.WR_DONE // 0 (WT)  Configures whether to represent writing byte data to UART TX FIFO is done
+#define bUSB_SERIAL_JTAG_SERIAL_IN_EP_DATA_FREE sUSB_SERIAL_JTAG.ep1ConfReg.BITS.SERIAL_IN_EP_DATA_FREE // 1 (RO)  Represents whether UART TX FIFO has space available
+#define bUSB_SERIAL_JTAG_SERIAL_OUT_EP_DATA_AVAIL sUSB_SERIAL_JTAG.ep1ConfReg.BITS.SERIAL_OUT_EP_DATA_AVAIL // 2 (RO)  Represents whether there is data in UART RX FIFO
 /** @} */
 
 /**
@@ -679,20 +677,20 @@ typedef struct {
  * @{
  */
 #define rUSB_SERIAL_JTAG_CONF0 sUSB_SERIAL_JTAG.conf0Reg.WORD // PHY hardware configuration
-#define bUSB_SERIAL_JTAG_CONF0_PHY_SEL sUSB_SERIAL_JTAG.conf0Reg.BITS.PHY_SEL // 0 (R/W)  Configures whether to select internal or external PHY
-#define bUSB_SERIAL_JTAG_CONF0_EXCHG_PINS_OVERRIDE sUSB_SERIAL_JTAG.conf0Reg.BITS.EXCHG_PINS_OVERRIDE // 1 (R/W)  Configures whether to override the exchange pins
-#define bUSB_SERIAL_JTAG_CONF0_EXCHG_PINS sUSB_SERIAL_JTAG.conf0Reg.BITS.EXCHG_PINS // 2 (R/W)   Configures whether to enable USB D+ D- exchange
-#define bUSB_SERIAL_JTAG_CONF0_VREFH sUSB_SERIAL_JTAG.conf0Reg.BITS.VREFH // 3-4 (R/W) Configures single-end input high threshold
-#define bUSB_SERIAL_JTAG_CONF0_VREFL sUSB_SERIAL_JTAG.conf0Reg.BITS.VREFL // 5-6 (R/W) Configures single-end input low threshold
-#define bUSB_SERIAL_JTAG_CONF0_VREF_OVERRIDE sUSB_SERIAL_JTAG.conf0Reg.BITS.VREF_OVERRIDE // 7 (R/W)  Configures whether to enable software control input thresh-old
-#define bUSB_SERIAL_JTAG_CONF0_PAD_PULL_OVERRIDE sUSB_SERIAL_JTAG.conf0Reg.BITS.PAD_PULL_OVERRIDE // 8 (R/W)  Configures whether to enable software to control USB D+ D- pullup and pulldown
-#define bUSB_SERIAL_JTAG_CONF0_DP_PULLUP sUSB_SERIAL_JTAG.conf0Reg.BITS.DP_PULLUP // 9 (R/W)  Configures whether to enable USB D+ pull up when PAD_PULL_OVERRIDE is 1
-#define bUSB_SERIAL_JTAG_CONF0_DP_PULLDOWN sUSB_SERIAL_JTAG.conf0Reg.BITS.DP_PULLDOWN // 10 (R/W) Configures whether to enable USB D+ pull down when PAD_PULL_OVERRIDE is 1
-#define bUSB_SERIAL_JTAG_CONF0_DM_PULLUP sUSB_SERIAL_JTAG.conf0Reg.BITS.DM_PULLUP // 11 (R/W) Configures whether to enable USB D- pull up when PAD_PULL_OVERRIDE is 1
-#define bUSB_SERIAL_JTAG_CONF0_DM_PULLDOWN sUSB_SERIAL_JTAG.conf0Reg.BITS.DM_PULLDOWN // 12 (R/W) Configures whether to enable USB D- pull down when PAD_PULL_OVERRIDE is 1
-#define bUSB_SERIAL_JTAG_CONF0_PULLUP_VALUE sUSB_SERIAL_JTAG.conf0Reg.BITS.PULLUP_VALUE // 13 (R/W) Configures the pull up value when PAD_PULL_OVERRIDE is 1
-#define bUSB_SERIAL_JTAG_CONF0_USB_PAD_ENABLE sUSB_SERIAL_JTAG.conf0Reg.BITS.USB_PAD_ENABLE // 14 (R/W) Configures whether to enable USB pad function
-#define bUSB_SERIAL_JTAG_CONF0_USB_JTAG_BRIDGE_EN sUSB_SERIAL_JTAG.conf0Reg.BITS.USB_JTAG_BRIDGE_EN // 15 (R/W) Configures whether to disconnect usb_jtag and in-ternal JTAG
+#define bUSB_SERIAL_JTAG_PHY_SEL sUSB_SERIAL_JTAG.conf0Reg.BITS.PHY_SEL // 0 (R/W)  Configures whether to select internal or external PHY
+#define bUSB_SERIAL_JTAG_EXCHG_PINS_OVERRIDE sUSB_SERIAL_JTAG.conf0Reg.BITS.EXCHG_PINS_OVERRIDE // 1 (R/W)  Configures whether to override the exchange pins
+#define bUSB_SERIAL_JTAG_EXCHG_PINS sUSB_SERIAL_JTAG.conf0Reg.BITS.EXCHG_PINS // 2 (R/W)   Configures whether to enable USB D+ D- exchange
+#define bUSB_SERIAL_JTAG_VREFH sUSB_SERIAL_JTAG.conf0Reg.BITS.VREFH // 3-4 (R/W) Configures single-end input high threshold
+#define bUSB_SERIAL_JTAG_VREFL sUSB_SERIAL_JTAG.conf0Reg.BITS.VREFL // 5-6 (R/W) Configures single-end input low threshold
+#define bUSB_SERIAL_JTAG_VREF_OVERRIDE sUSB_SERIAL_JTAG.conf0Reg.BITS.VREF_OVERRIDE // 7 (R/W)  Configures whether to enable software control input thresh-old
+#define bUSB_SERIAL_JTAG_PAD_PULL_OVERRIDE sUSB_SERIAL_JTAG.conf0Reg.BITS.PAD_PULL_OVERRIDE // 8 (R/W)  Configures whether to enable software to control USB D+ D- pullup and pulldown
+#define bUSB_SERIAL_JTAG_DP_PULLUP sUSB_SERIAL_JTAG.conf0Reg.BITS.DP_PULLUP // 9 (R/W)  Configures whether to enable USB D+ pull up when PAD_PULL_OVERRIDE is 1
+#define bUSB_SERIAL_JTAG_DP_PULLDOWN sUSB_SERIAL_JTAG.conf0Reg.BITS.DP_PULLDOWN // 10 (R/W) Configures whether to enable USB D+ pull down when PAD_PULL_OVERRIDE is 1
+#define bUSB_SERIAL_JTAG_DM_PULLUP sUSB_SERIAL_JTAG.conf0Reg.BITS.DM_PULLUP // 11 (R/W) Configures whether to enable USB D- pull up when PAD_PULL_OVERRIDE is 1
+#define bUSB_SERIAL_JTAG_DM_PULLDOWN sUSB_SERIAL_JTAG.conf0Reg.BITS.DM_PULLDOWN // 12 (R/W) Configures whether to enable USB D- pull down when PAD_PULL_OVERRIDE is 1
+#define bUSB_SERIAL_JTAG_PULLUP_VALUE sUSB_SERIAL_JTAG.conf0Reg.BITS.PULLUP_VALUE // 13 (R/W) Configures the pull up value when PAD_PULL_OVERRIDE is 1
+#define bUSB_SERIAL_JTAG_USB_PAD_ENABLE sUSB_SERIAL_JTAG.conf0Reg.BITS.USB_PAD_ENABLE // 14 (R/W) Configures whether to enable USB pad function
+#define bUSB_SERIAL_JTAG_USB_JTAG_BRIDGE_EN sUSB_SERIAL_JTAG.conf0Reg.BITS.USB_JTAG_BRIDGE_EN // 15 (R/W) Configures whether to disconnect usb_jtag and in-ternal JTAG
 /** @} */
 
 /**
@@ -894,22 +892,102 @@ typedef struct {
  * @{
  */
 #define rUSB_SERIAL_JTAG_IN_EP0_ST sUSB_SERIAL_JTAG.inEp0StReg.WORD // Control IN endpoint status information
-#define bUSB_SERIAL_JTAG_IN_EP0_STATE sUSB_SERIAL_JTAG.inEp0StReg.BITS.IN_EP_STATE // 0-1 (RO) Represents state of IN Endpoint 0
-#define bUSB_SERIAL_JTAG_IN_EP0_WR_ADDR sUSB_SERIAL_JTAG.inEp0StReg.BITS.IN_EP_WR_ADDR // 2-8 (RO) Represents write data address of IN endpoint 0
-#define bUSB_SERIAL_JTAG_IN_EP0_RD_ADDR sUSB_SERIAL_JTAG.inEp0StReg.BITS.IN_EP_RD_ADDR // 9-15 (RO) Represents read data address of IN endpoint 0
+#define bUSB_SERIAL_JTAG_IN_EP0_STATE sUSB_SERIAL_JTAG.inEp0StReg.BITS.IN_EP_STATE // 0-1 (RO) Represents state of IN Endpoint 3
+#define bUSB_SERIAL_JTAG_IN_EP0_WR_ADDR sUSB_SERIAL_JTAG.inEp0StReg.BITS.IN_EP_WR_ADDR // 2-8 (RO) Represents write data address of IN endpoint 3
+#define bUSB_SERIAL_JTAG_IN_EP0_RD_ADDR sUSB_SERIAL_JTAG.inEp0StReg.BITS.IN_EP_RD_ADDR // 9-15 (RO) Represents read data address of IN endpoint 3
 /** @} */
 
+/**
+ * \addtogroup USB_SERIAL_JTAG_IN_EP1_ST_REG
+ * @{
+ */	
+#define rUSB_SERIAL_JTAG_IN_EP1_ST sUSB_SERIAL_JTAG.inEp1StReg.WORD // Control IN endpoint status information
+#define bUSB_SERIAL_JTAG_IN_EP1_STATE sUSB_SERIAL_JTAG.inEp1StReg.BITS.IN_EP_STATE // 0-1 (RO) Represents state of IN Endpoint 1
+#define bUSB_SERIAL_JTAG_IN_EP1_WR_ADDR sUSB_SERIAL_JTAG.inEp1StReg.BITS.IN_EP_WR_ADDR // 2-8 (RO) Represents write data address of IN endpoint 1
+#define bUSB_SERIAL_JTAG_IN_EP1_RD_ADDR sUSB_SERIAL_JTAG.inEp1StReg.BITS.IN_EP_RD_ADDR // 9-15 (RO) Represents read data address of IN endpoint 1
+/** @} */
 
+/**
+ * \addtogroup USB_SERIAL_JTAG_IN_EP2_ST_REG
+ * @{
+ */	
+#define rUSB_SERIAL_JTAG_IN_EP2_ST sUSB_SERIAL_JTAG.inEp2StReg.WORD // Control IN endpoint status information
+#define bUSB_SERIAL_JTAG_IN_EP2_STATE sUSB_SERIAL_JTAG.inEp2StReg.BITS.IN_EP_STATE // 0-1 (RO) Represents state of IN Endpoint 2
+#define bUSB_SERIAL_JTAG_IN_EP2_WR_ADDR sUSB_SERIAL_JTAG.inEp2StReg.BITS.IN_EP_WR_ADDR // 2-8 (RO) Represents write data address of IN endpoint 2
+#define bUSB_SERIAL_JTAG_IN_EP2_RD_ADDR sUSB_SERIAL_JTAG.inEp2StReg.BITS.IN_EP_RD_ADDR // 9-15 (RO) Represents read data address of IN endpoint 2
+/** @} */
 
+/**
+ * \addtogroup USB_SERIAL_JTAG_IN_EP3_ST_REG
+ * @{
+ */	
+#define rUSB_SERIAL_JTAG_IN_EP3_ST sUSB_SERIAL_JTAG.inEp3StReg.WORD // Control IN endpoint status information
+#define bUSB_SERIAL_JTAG_IN_EP3_STATE sUSB_SERIAL_JTAG.inEp3StReg.BITS.IN_EP_STATE // 0-1 (RO) Represents state of IN Endpoint 2
+#define bUSB_SERIAL_JTAG_IN_EP3_WR_ADDR sUSB_SERIAL_JTAG.inEp3StReg.BITS.IN_EP_WR_ADDR // 2-8 (RO) Represents write data address of IN endpoint 2
+#define bUSB_SERIAL_JTAG_IN_EP3_RD_ADDR sUSB_SERIAL_JTAG.inEp3StReg.BITS.IN_EP_RD_ADDR // 9-15 (RO) Represents read data address of IN endpoint 2
+/** @} */
 
+/**
+ * \addtogroup USB_SERIAL_JTAG_OUT_EP0_ST_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_OUT_EP0_ST sUSB_SERIAL_JTAG.outEp0StReg.WORD // Control OUT endpoint status information
+#define bUSB_SERIAL_JTAG_OUT_EP0_STATE sUSB_SERIAL_JTAG.outEp0StReg.BITS.OUT_EPX_STATE // 0-1  Represents the state of OUT endpoint 0
+#define bUSB_SERIAL_JTAG_OUT_EP0_WR_ADDR sUSB_SERIAL_JTAG.outEp0StReg.BITS.OUT_EPX_WR_ADDR // 2-8  Represents the write data address of OUT endpoint 0
+#define bUSB_SERIAL_JTAG_OUT_EP0_RD_ADDR sUSB_SERIAL_JTAG.outEp0StReg.BITS.OUT_EPX_RD_ADDR // 9-15 Represents the read data address of OUT endpoint 0
+/** @} */
 
+/**
+ * \addtogroup USB_SERIAL_JTAG_OUT_EP1_ST_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_OUT_EP1_ST sUSB_SERIAL_JTAG.outEp1StReg.WORD // CDC-ACM OUT endpoint status information
+#define bUSB_SERIAL_JTAG_OUT_EP1_STATE sUSB_SERIAL_JTAG.outEp1StReg.BITS.OUT_EPX_STATE // 0-1  Represents the state of OUT endpoint 1
+#define bUSB_SERIAL_JTAG_OUT_EP1_WR_ADDR sUSB_SERIAL_JTAG.outEp1StReg.BITS.OUT_EPX_WR_ADDR // 2-8  Represents the write data address of OUT endpoint 1
+#define bUSB_SERIAL_JTAG_OUT_EP1_RD_ADDR sUSB_SERIAL_JTAG.outEp1StReg.BITS.OUT_EPX_RD_ADDR // 9-15 Represents the read data address of OUT endpoint 1
+#define bUSB_SERIAL_JTAG_OUT_EP1_REC_DATA_CNT sUSB_SERIAL_JTAG.outEp1StReg.BITS.EP1_REC_DATA_CNT // 16-22 Represents data count in OUT endpoint 1 when one packet is received
+/** @} */
 
+/**
+ * \addtogroup USB_SERIAL_JTAG_OUT_EP2_ST_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_OUT_EP2_ST sUSB_SERIAL_JTAG.outEp2StReg.WORD // JTAG OUT endpoint status information
+#define bUSB_SERIAL_JTAG_OUT_EP2_STATE sUSB_SERIAL_JTAG.outEp2StReg.BITS.OUT_EPX_STATE // 0-1  Represents the state of OUT endpoint 2
+#define bUSB_SERIAL_JTAG_OUT_EP2_WR_ADDR sUSB_SERIAL_JTAG.outEp2StReg.BITS.OUT_EPX_WR_ADDR // 2-8  Represents the write data address of OUT endpoint 2
+#define bUSB_SERIAL_JTAG_OUT_EP2_RD_ADDR sUSB_SERIAL_JTAG.outEp2StReg.BITS.OUT_EPX_RD_ADDR // 9-15 Represents the read data address of OUT endpoint 2
+/** @} */
 
+/**
+ * \addtogroup USB_SERIAL_JTAG_SET_LINE_CODE_W0_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_SET_LINE_CODE_W0 sUSB_SERIAL_JTAG.setLineCodeW0Reg.WORD // W0 of SET_LINE_CODING command
+/** @} */
 
+/**
+ * \addtogroup USB_SERIAL_JTAG_SET_LINE_CODE_W1_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_SET_LINE_CODE_W1 sUSB_SERIAL_JTAG.setLineCodeW1Reg.WORD // W1 of SET_LINE_CODING command
+#define bUSB_SERIAL_JTAG_BCHAR_FORMAT sUSB_SERIAL_JTAG.setLineCodeW1Reg.BITS.BCHAR_FORMAT // 0-7 (RO)  Represents the value of bCharFormat set by host through SET_LINE_CODING command
+#define bUSB_SERIAL_JTAG_BPARITY_TYPE sUSB_SERIAL_JTAG.setLineCodeW1Reg.BITS.BPARITY_TYPE // 8-15 (RO) Represents the value of bParityType set by host through SET_LINE_CODING command
+#define bUSB_SERIAL_JTAG_BDATA_BITS sUSB_SERIAL_JTAG.setLineCodeW1Reg.BITS.BDATA_BITS // 16-23 (RO) Represents the value of bDataBits set by host through SET_LINE_CODING command
+/** @} */
 
+/**
+ * \addtogroup USB_SERIAL_JTAG_BUS_RESET_ST_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_BUS_RESET_ST sUSB_SERIAL_JTAG.busResetStReg.WORD // USB bus reset status register
+#define bUSB_SERIAL_JTAG_USB_BUS_RESET_ST sUSB_SERIAL_JTAG.busResetStReg.BITS.BUS_RESET_ST // 0 (RO)  Represents whether USB bus reset is released
+/** @} */
 
-
-
-
+/**
+ * \addtogroup USB_SERIAL_JTAG_DATE_REG
+ * @{
+ */
+#define rUSB_SERIAL_JTAG_DATE sUSB_SERIAL_JTAG.dateReg.WORD // Date register
+/** @} */
 
 #endif // USB_SERIAL_JTAG_ESP32_C6_LIB_H
